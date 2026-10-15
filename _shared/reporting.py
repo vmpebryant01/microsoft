@@ -89,6 +89,16 @@ def _response_json(response: Any) -> dict[str, Any]:
     return result
 
 
+def _result_truncated(value: Any) -> bool:
+    if value is None:
+        return False
+    if isinstance(value, bool):
+        return value
+    if isinstance(value, str) and value.casefold() in ("true", "false"):
+        return value.casefold() == "true"
+    raise ValueError("Azure Resource Graph returned an unexpected resultTruncated value")
+
+
 def _request_with_retry(session: Any, method: str, url: str, **kwargs: Any) -> Any:
     for attempt in range(4):
         response = session.request(method, url, timeout=30, **kwargs)
@@ -134,7 +144,7 @@ def azure_resources(resource_type: str, subscriptions: list[str]) -> list[dict[s
             rows.extend(data)
             token = page.get("$skipToken")
             if not token:
-                if page.get("resultTruncated") is True:
+                if _result_truncated(page.get("resultTruncated")):
                     raise RuntimeError("Azure Resource Graph truncated results without a continuation token")
                 break
     finally:

@@ -17,12 +17,20 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "_shared"))
 
 from reporting import (  # noqa: E402
-    _items, azure_resources, catalog, csv_cell, network_controller_resources,
+    _items, _result_truncated, azure_resources, catalog, csv_cell, network_controller_resources,
     report_rows, write_csv,
 )
 
 
 class ReportTests(unittest.TestCase):
+    def test_result_truncated_accepts_documented_text_and_booleans(self) -> None:
+        self.assertTrue(_result_truncated("true"))
+        self.assertTrue(_result_truncated(True))
+        self.assertFalse(_result_truncated("false"))
+        self.assertFalse(_result_truncated(False))
+        with self.assertRaises(ValueError):
+            _result_truncated("unknown")
+
     def test_each_category_has_twenty_five_paired_reports(self) -> None:
         for category in (
             "azure-cloud", "azure-local", "azure-local-sdn-onprem",
@@ -130,6 +138,40 @@ class ReportTests(unittest.TestCase):
         self.assertEqual([row["id"] for row in rows], ["one", "two"])
         self.assertEqual(calls[1]["options"]["$skipToken"], "next")
         self.assertEqual(calls[0]["subscriptions"], ["sub-one"])
+
+    def test_azure_resource_graph_rejects_text_truncation(self) -> None:
+        class Response:
+            status_code = 200
+            headers = {}
+
+            def raise_for_status(self):
+                pass
+
+            def json(self):
+                return {"data": [{"id": "one"}], "resultTruncated": "true"}
+
+        class Session:
+            def request(self, method, url, **kwargs):
+                return Response()
+
+            def close(self):
+                pass
+
+        class Credential:
+            def get_token(self, scope):
+                return types.SimpleNamespace(token="test-token")
+
+            def close(self):
+                pass
+
+        modules = {
+            "requests": types.SimpleNamespace(Session=Session),
+            "azure": types.ModuleType("azure"),
+            "azure.identity": types.SimpleNamespace(DefaultAzureCredential=Credential),
+        }
+        with patch.dict(sys.modules, modules):
+            with self.assertRaisesRegex(RuntimeError, "truncated results"):
+                azure_resources("microsoft.compute/virtualmachines", ["sub-one"])
 
     def test_network_controller_child_collection(self) -> None:
         urls = []

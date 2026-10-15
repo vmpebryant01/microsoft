@@ -48,8 +48,12 @@ function ConvertTo-ReportRows {
     param([array]$Resources, $Report)
     $rows = [System.Collections.Generic.List[object]]::new()
     foreach ($resource in $Resources) {
-        $items = if ($Report.ContainsKey('expand')) { Get-PathValue $resource $Report.expand } else { ,$null }
-        if ($null -eq $items) { continue }
+        if ($Report.ContainsKey('expand')) {
+            $items = Get-PathValue $resource $Report.expand
+            if ($null -eq $items) { continue }
+        } else {
+            $items = ,$null
+        }
         foreach ($item in @($items)) {
             if ($Report.ContainsKey('filter')) {
                 $value = Get-FieldValue $resource $item $Report.filter.path
@@ -63,6 +67,16 @@ function ConvertTo-ReportRows {
         }
     }
     return ,$rows.ToArray()
+}
+
+function Test-ArgResultTruncated {
+    param($Value)
+    if ($null -eq $Value) { return $false }
+    if ($Value -is [bool]) { return $Value }
+    $text = "$Value"
+    if ($text -ieq 'true') { return $true }
+    if ($text -ieq 'false') { return $false }
+    throw 'Azure Resource Graph returned an unexpected ResultTruncated value'
 }
 
 function Get-ArgResources {
@@ -84,7 +98,7 @@ function Get-ArgResources {
             }
         }
         $skipToken = $page.SkipToken
-        if (-not $skipToken -and $page.PSObject.Properties['ResultTruncated'] -and $page.ResultTruncated) {
+        if (-not $skipToken -and $page.PSObject.Properties['ResultTruncated'] -and (Test-ArgResultTruncated $page.ResultTruncated)) {
             throw 'Azure Resource Graph truncated results without a continuation token'
         }
     } while ($skipToken)
