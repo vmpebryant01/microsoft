@@ -1,0 +1,43 @@
+{
+  "author": "Paul Bryant",
+  "note": "Fictional offline examples based on published resource shapes. These are not live responses.",
+  "cases": [
+    {
+      "category": "azure-cloud",
+      "report": "vm_inventory",
+      "resources": [{"id": "/subscriptions/example/resourceGroups/sample/providers/Microsoft.Compute/virtualMachines/vm-one", "name": "vm-one", "resourceGroup": "sample", "subscriptionId": "example", "location": "eastus", "properties": {"hardwareProfile": {"vmSize": "Standard_B2s"}, "provisioningState": "Succeeded"}}],
+      "expected": [{"name": "vm-one", "vmSize": "Standard_B2s", "provisioningState": "Succeeded"}]
+    },
+    {
+      "category": "azure-cloud",
+      "report": "vm_data_disks",
+      "resources": [{"name": "vm-one", "properties": {"storageProfile": {"dataDisks": [{"lun": 0, "name": "data-one", "managedDisk": {"id": "/subscriptions/example/disks/data-one"}}]}}}],
+      "expected": [{"name": "vm-one", "lun": 0, "diskName": "data-one"}]
+    },
+    {
+      "category": "azure-local",
+      "report": "cluster_nodes",
+      "resources": [{"name": "local-one", "properties": {"reportedProperties": {"nodes": [{"name": "node-one", "osVersion": "sample"}]}}}],
+      "expected": [{"name": "local-one", "node": {"name": "node-one", "osVersion": "sample"}}]
+    },
+    {
+      "category": "azure-local-sdn-arc-enabled",
+      "report": "inbound_rules",
+      "resources": [
+        {"name": "allow-in", "extendedLocation": {"name": "/subscriptions/example/resourceGroups/sample/providers/Microsoft.ExtendedLocation/customLocations/local-one"}, "properties": {"direction": "Inbound", "access": "Allow", "protocol": "Tcp", "priority": 400}},
+        {"name": "deny-out", "extendedLocation": {"name": "/subscriptions/example/resourceGroups/sample/providers/Microsoft.ExtendedLocation/customLocations/local-two"}, "properties": {"direction": "Outbound", "access": "Deny", "protocol": "Tcp", "priority": 500}}
+      ],
+      "custom_location": "/subscriptions/example/resourceGroups/sample/providers/Microsoft.ExtendedLocation/customLocations/local-one",
+      "expected": [{"name": "allow-in", "access": "Allow", "protocol": "Tcp", "priority": 400}]
+    },
+    {
+      "category": "azure-local-sdn-onprem",
+      "report": "acl_allow_rules",
+      "resources": [
+        {"resourceId": "allow-one", "_parentId": "acl-one", "properties": {"action": "Allow", "priority": 100, "protocol": "Tcp"}},
+        {"resourceId": "deny-one", "_parentId": "acl-one", "properties": {"action": "Deny", "priority": 200, "protocol": "Tcp"}}
+      ],
+      "expected": [{"resourceId": "allow-one", "parentId": "acl-one", "priority": 100, "protocol": "Tcp"}]
+    }
+  ]
+}

@@ -8,6 +8,7 @@ from __future__ import annotations
 import argparse
 import csv
 import json
+import re
 import sys
 import time
 from pathlib import Path
@@ -79,6 +80,23 @@ def report_rows(resources: Iterable[dict[str, Any]], spec: dict[str, Any]) -> li
                 continue
             rows.append({name: field_value(resource, item, path) for name, path in spec["fields"]})
     return rows
+
+
+def normalize_custom_location(custom_location: str) -> str:
+    target = custom_location.strip().rstrip("/").casefold()
+    if not re.fullmatch(
+        r"/subscriptions/[^/]+/resourcegroups/[^/]+/providers/"
+        r"microsoft\.extendedlocation/customlocations/[^/]+", target
+    ):
+        raise ValueError("A full Azure custom location resource ID is required")
+    return target
+
+
+def scope_custom_location(resources: Iterable[dict[str, Any]], custom_location: str) -> list[dict[str, Any]]:
+    target = normalize_custom_location(custom_location)
+    return [resource for resource in resources
+            if isinstance(path_value(resource, "extendedLocation.name"), str)
+            and path_value(resource, "extendedLocation.name").rstrip("/").casefold() == target]
 
 
 def _response_json(response: Any) -> dict[str, Any]:
@@ -239,6 +257,8 @@ def main(category: str, report: str) -> None:
     parser.add_argument("--output", default="-", help="CSV path, or - for standard output")
     if specs["source"] == "arg":
         parser.add_argument("--subscription", action="append", default=[], help="Subscription ID; repeat for more")
+        if category == "azure-local-sdn-arc-enabled":
+            parser.add_argument("--custom-location", help="Full Azure custom location resource ID")
     else:
         parser.add_argument("--controller-uri", help="HTTPS Network Controller REST address")
     args = parser.parse_args()
@@ -247,7 +267,13 @@ def main(category: str, report: str) -> None:
         return
     try:
         if specs["source"] == "arg":
+            if category == "azure-local-sdn-arc-enabled" and not args.custom_location:
+                parser.error("--custom-location is required for Arc-enabled SDN reports")
+            if category == "azure-local-sdn-arc-enabled":
+                normalize_custom_location(args.custom_location)
             resources = azure_resources(spec["source_type"], args.subscription)
+            if category == "azure-local-sdn-arc-enabled":
+                resources = scope_custom_location(resources, args.custom_location)
         else:
             if not args.controller_uri:
                 parser.error("--controller-uri is required")

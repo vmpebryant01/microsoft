@@ -13,6 +13,8 @@ This repository contains 200 read-only report scripts across four areas. Each ar
 
 These are examples with offline checks. Paul Bryant no longer has a lab, so none of these scripts has been run against a live Azure subscription, Azure Local system or Network Controller. A successful local test does not establish version compatibility or production readiness. Some optional fields may be absent on a particular release. An empty CSV can mean no matching resources, insufficient read permissions, or resources that are not projected into Azure Resource Graph. Check the scope and permissions before interpreting an empty report.
 
+Review the [per-report compatibility and source index](COMPATIBILITY.md), [fictional output examples and troubleshooting guide](EXAMPLES.md), and [version branch policy](VERSIONING.md) before use.
+
 ## Azure reports
 
 The Azure Cloud, Azure Local and Arc-enabled SDN reports use [Azure Resource Graph](https://learn.microsoft.com/en-us/azure/governance/resource-graph/overview). Resource Graph returns resources visible to the signed-in identity. Grant an appropriate read role on each subscription and use an identity that is allowed to query Resource Graph. Reports accept one or more subscription IDs and fetch all pages when the service provides a continuation token. The scripts stop if the service reports truncation without a token.
@@ -32,6 +34,18 @@ python azure-cloud/python/get_vm_inventory.py --subscription <subscription-id> -
 Repeat `--subscription` in Python or pass an array to `-SubscriptionId` in PowerShell to include more subscriptions. Use `--describe` or `-Describe` to inspect a report without connecting. If no output path is given, Python writes CSV to standard output and PowerShell emits objects to the pipeline.
 
 Azure Resource Graph is an inventory service. It can lag resource changes and does not replace a live health check. The Azure Local reports are intended for the Azure Local 24H2/12.x generation; they do not assert that every projected property exists on every monthly release. The Arc-enabled SDN collection is organized around the management model documented for Azure Local 2506 or later. Logical networks and interfaces can exist without that feature, so these reports alone do not prove SDN enablement. Confirm the management model on the target instance. The on-premises SDN collection targets Network Controller deployments managed by local tools.
+
+Arc-enabled SDN reports require the full Azure custom location resource ID to avoid mixing resources from different Azure Local instances:
+
+```powershell
+./azure-local-sdn-arc-enabled/powershell/Get-MsSdnArcLogicalNetworks.ps1 -SubscriptionId '<subscription-id>' -CustomLocation '/subscriptions/<subscription-id>/resourceGroups/<resource-group>/providers/Microsoft.ExtendedLocation/customLocations/<name>'
+```
+
+```text
+python azure-local-sdn-arc-enabled/python/get_logical_networks.py --subscription <subscription-id> --custom-location '/subscriptions/<subscription-id>/resourceGroups/<resource-group>/providers/Microsoft.ExtendedLocation/customLocations/<name>'
+```
+
+The filter only selects resources under that custom location. It does not prove that Arc-enabled SDN is active there.
 
 ## On-premises SDN reports
 
@@ -56,5 +70,7 @@ The Network Controller API paths come from Microsoft's [Northbound Interface pro
 - [Network Controller northbound REST model](https://learn.microsoft.com/en-us/azure/azure-local/concepts/network-controller-overview)
 
 The `reports.json` file in each area records the resource type or Network Controller endpoint and output fields for every report. The entry points share tested pagination, filtering and CSV logic in `_shared`. Run `python tools/build_reports.py` after editing the catalog source to regenerate the entry points and category indexes.
+
+Use the [problem template](.github/ISSUE_TEMPLATE/report_problem.yml) for sanitized defects and version findings. Read [contribution terms](CONTRIBUTING.md) and [security reporting guidance](SECURITY.md) before submitting material.
 
 Copyright (c) 2026 Paul Bryant. All rights reserved. See [copyright and reuse](COPYRIGHT.md).

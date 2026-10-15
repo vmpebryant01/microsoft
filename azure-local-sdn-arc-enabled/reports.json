@@ -37,7 +37,7 @@
           "properties.provisioningState"
         ]
       ],
-      "docs": "https://learn.microsoft.com/en-us/azure/azure-local/concepts/sdn-overview"
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/logicalnetworks"
     },
     {
       "id": "logical_network_addressing",
@@ -69,7 +69,7 @@
           "properties.dhcpOptions.dnsServers"
         ]
       ],
-      "docs": "https://learn.microsoft.com/en-us/azure/azure-local/concepts/sdn-overview"
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/logicalnetworks"
     },
     {
       "id": "logical_network_vlans",
@@ -105,7 +105,7 @@
           "item.properties.addressPrefix"
         ]
       ],
-      "docs": "https://learn.microsoft.com/en-us/azure/azure-local/concepts/sdn-overview",
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/logicalnetworks",
       "expand": "properties.subnets"
     },
     {
@@ -134,7 +134,7 @@
           "item"
         ]
       ],
-      "docs": "https://learn.microsoft.com/en-us/azure/azure-local/concepts/sdn-overview",
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/logicalnetworks",
       "expand": "properties.subnets"
     },
     {
@@ -167,7 +167,7 @@
           "item.properties.ipPools"
         ]
       ],
-      "docs": "https://learn.microsoft.com/en-us/azure/azure-local/concepts/sdn-overview",
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/logicalnetworks",
       "expand": "properties.subnets"
     },
     {
@@ -200,7 +200,7 @@
           "properties.vmSwitchName"
         ]
       ],
-      "docs": "https://learn.microsoft.com/en-us/azure/azure-local/concepts/sdn-overview"
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/logicalnetworks"
     },
     {
       "id": "logical_network_not_succeeded",
@@ -228,7 +228,7 @@
           "properties.provisioningState"
         ]
       ],
-      "docs": "https://learn.microsoft.com/en-us/azure/azure-local/concepts/sdn-overview",
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/logicalnetworks",
       "filter": {
         "path": "properties.provisioningState",
         "op": "ne",
@@ -269,7 +269,7 @@
           "properties.provisioningState"
         ]
       ],
-      "docs": "https://learn.microsoft.com/en-us/azure/azure-local/concepts/sdn-overview"
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/networkinterfaces"
     },
     {
       "id": "nic_ip_configurations",
@@ -297,7 +297,7 @@
           "item"
         ]
       ],
-      "docs": "https://learn.microsoft.com/en-us/azure/azure-local/concepts/sdn-overview",
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/networkinterfaces",
       "expand": "properties.ipConfigurations"
     },
     {
@@ -330,7 +330,7 @@
           "item.properties.subnet.id"
         ]
       ],
-      "docs": "https://learn.microsoft.com/en-us/azure/azure-local/concepts/sdn-overview",
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/networkinterfaces",
       "expand": "properties.ipConfigurations"
     },
     {
@@ -359,7 +359,7 @@
           "properties.networkSecurityGroup.id"
         ]
       ],
-      "docs": "https://learn.microsoft.com/en-us/azure/azure-local/concepts/sdn-overview"
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/networkinterfaces"
     },
     {
       "id": "nic_without_security_group",
@@ -387,7 +387,7 @@
           "extendedLocation.name"
         ]
       ],
-      "docs": "https://learn.microsoft.com/en-us/azure/azure-local/concepts/sdn-overview",
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/networkinterfaces",
       "filter": {
         "path": "properties.networkSecurityGroup.id",
         "op": "missing"
@@ -419,7 +419,7 @@
           "properties.provisioningState"
         ]
       ],
-      "docs": "https://learn.microsoft.com/en-us/azure/azure-local/concepts/sdn-overview",
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/networkinterfaces",
       "filter": {
         "path": "properties.provisioningState",
         "op": "ne",
@@ -456,7 +456,7 @@
           "properties.provisioningState"
         ]
       ],
-      "docs": "https://learn.microsoft.com/en-us/azure/azure-local/concepts/sdn-overview"
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/networksecuritygroups"
     },
     {
       "id": "nsg_network_interfaces",
@@ -484,7 +484,7 @@
           "item.id"
         ]
       ],
-      "docs": "https://learn.microsoft.com/en-us/azure/azure-local/concepts/sdn-overview",
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/networksecuritygroups",
       "expand": "properties.networkInterfaces"
     },
     {
@@ -513,7 +513,7 @@
           "item.id"
         ]
       ],
-      "docs": "https://learn.microsoft.com/en-us/azure/azure-local/concepts/sdn-overview",
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/networksecuritygroups",
       "expand": "properties.subnets"
     },
     {
@@ -542,7 +542,7 @@
           "properties.provisioningState"
         ]
       ],
-      "docs": "https://learn.microsoft.com/en-us/azure/azure-local/concepts/sdn-overview",
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/networksecuritygroups",
       "filter": {
         "path": "properties.provisioningState",
         "op": "ne",
@@ -583,7 +583,7 @@
           "properties.priority"
         ]
       ],
-      "docs": "https://learn.microsoft.com/en-us/azure/azure-local/concepts/sdn-overview"
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/networksecuritygroups/securityrules"
     },
     {
       "id": "inbound_rules",
@@ -619,7 +619,7 @@
           "properties.priority"
         ]
       ],
-      "docs": "https://learn.microsoft.com/en-us/azure/azure-local/concepts/sdn-overview",
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/networksecuritygroups/securityrules",
       "filter": {
         "path": "properties.direction",
         "op": "eq",
@@ -660,7 +660,7 @@
           "properties.priority"
         ]
       ],
-      "docs": "https://learn.microsoft.com/en-us/azure/azure-local/concepts/sdn-overview",
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/networksecuritygroups/securityrules",
       "filter": {
         "path": "properties.direction",
         "op": "eq",
@@ -701,7 +701,7 @@
           "properties.destinationPortRanges"
         ]
       ],
-      "docs": "https://learn.microsoft.com/en-us/azure/azure-local/concepts/sdn-overview",
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/networksecuritygroups/securityrules",
       "filter": {
         "path": "properties.access",
         "op": "eq",
@@ -742,7 +742,7 @@
           "properties.destinationPortRanges"
         ]
       ],
-      "docs": "https://learn.microsoft.com/en-us/azure/azure-local/concepts/sdn-overview",
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/networksecuritygroups/securityrules",
       "filter": {
         "path": "properties.access",
         "op": "eq",
@@ -783,7 +783,7 @@
           "properties.direction"
         ]
       ],
-      "docs": "https://learn.microsoft.com/en-us/azure/azure-local/concepts/sdn-overview"
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/networksecuritygroups/securityrules"
     },
     {
       "id": "rule_destinations",
@@ -819,7 +819,7 @@
           "properties.direction"
         ]
       ],
-      "docs": "https://learn.microsoft.com/en-us/azure/azure-local/concepts/sdn-overview"
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/networksecuritygroups/securityrules"
     },
     {
       "id": "rule_protocols",
@@ -855,7 +855,7 @@
           "properties.access"
         ]
       ],
-      "docs": "https://learn.microsoft.com/en-us/azure/azure-local/concepts/sdn-overview"
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/networksecuritygroups/securityrules"
     }
   ]
 }

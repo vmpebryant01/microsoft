@@ -69,6 +69,28 @@ function ConvertTo-ReportRows {
     return ,$rows.ToArray()
 }
 
+function Assert-CustomLocationId {
+    param([string]$CustomLocation)
+    $target = $CustomLocation.Trim().TrimEnd('/')
+    if ($target -notmatch '^/subscriptions/[^/]+/resourceGroups/[^/]+/providers/Microsoft\.ExtendedLocation/customLocations/[^/]+$') {
+        throw 'A full Azure custom location resource ID is required'
+    }
+    return $target
+}
+
+function Select-CustomLocationResources {
+    param([array]$Resources, [string]$CustomLocation)
+    $target = Assert-CustomLocationId $CustomLocation
+    $selected = [System.Collections.Generic.List[object]]::new()
+    foreach ($resource in $Resources) {
+        $location = Get-PathValue $resource 'extendedLocation.name'
+        if ($location -is [string] -and $location.TrimEnd('/') -ieq $target) {
+            $selected.Add($resource)
+        }
+    }
+    return ,$selected.ToArray()
+}
+
 function Test-ArgResultTruncated {
     param($Value)
     if ($null -eq $Value) { return $false }
@@ -163,17 +185,27 @@ function Invoke-Report {
         [Parameter(Mandatory)][string]$ReportId,
         [string[]]$SubscriptionId,
         [string]$ControllerUri,
+        [string]$CustomLocation,
         [string]$OutputPath,
         [switch]$Describe
     )
     $definition = Get-ReportDefinition $Category $ReportId
     $report = $definition.Report
     if ($Describe) { return [pscustomobject]$report }
+    if ($Category -eq 'azure-local-sdn-arc-enabled' -and -not $CustomLocation) {
+        throw 'CustomLocation is required for Arc-enabled SDN reports'
+    }
+    if ($Category -eq 'azure-local-sdn-arc-enabled') {
+        Assert-CustomLocationId $CustomLocation | Out-Null
+    }
     $resources = if ($definition.Catalog.source -eq 'arg') {
         Get-ArgResources $report.source_type $SubscriptionId
     } else {
         if (-not $ControllerUri) { throw 'ControllerUri is required' }
         Get-NcResources $report $ControllerUri
+    }
+    if ($Category -eq 'azure-local-sdn-arc-enabled') {
+        $resources = Select-CustomLocationResources @($resources) $CustomLocation
     }
     $rows = ConvertTo-ReportRows @($resources) $report
     if (-not $OutputPath) { return $rows }

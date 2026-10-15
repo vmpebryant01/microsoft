@@ -6,6 +6,8 @@ Each report is available in PowerShell and Python. All reports read configuratio
 
 These reports inspect Azure Local network resources used with the Arc-enabled SDN management model. Logical networks and interfaces can also exist without SDN enabled by Arc. The resource type alone does not establish the management model. Confirm SDN enablement on the target Azure Local instance before interpreting these reports as an Arc-enabled SDN inventory.
 
+Provide `--custom-location` in Python or `-CustomLocation` in PowerShell with the full Azure custom location resource ID. Every Arc-enabled report requires it and includes only resources whose `extendedLocation.name` matches that ID. This limits the report to one location, but does not independently verify that SDN is enabled there.
+
 | Report | PowerShell | Python |
 | --- | --- | --- |
 | Inventory Azure Local logical networks projected into Azure. | [PowerShell](powershell/Get-MsSdnArcLogicalNetworks.ps1) | [Python](python/get_logical_networks.py) |

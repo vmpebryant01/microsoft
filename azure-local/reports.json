@@ -33,7 +33,7 @@
           "properties.provisioningState"
         ]
       ],
-      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/allversions"
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/clusters"
     },
     {
       "id": "cluster_versions",
@@ -133,7 +133,7 @@
           "tags"
         ]
       ],
-      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/allversions"
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/clusters"
     },
     {
       "id": "cluster_nodes",
@@ -194,7 +194,7 @@
           "properties.arcInstanceResourceGroup"
         ]
       ],
-      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/allversions"
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/clusters/arcsettings"
     },
     {
       "id": "arc_extensions",
@@ -234,7 +234,7 @@
           "properties.provisioningState"
         ]
       ],
-      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/allversions"
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/clusters/arcsettings/extensions"
     },
     {
       "id": "deployment_settings",
@@ -266,7 +266,7 @@
           "properties.deploymentMode"
         ]
       ],
-      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/allversions"
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/clusters/deploymentsettings"
     },
     {
       "id": "security_settings",
@@ -298,7 +298,7 @@
           "properties.securityComplianceStatus"
         ]
       ],
-      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/allversions"
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/clusters/securitysettings"
     },
     {
       "id": "update_summaries",
@@ -330,7 +330,7 @@
           "properties.lastUpdated"
         ]
       ],
-      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/allversions"
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/clusters/updatesummaries"
     },
     {
       "id": "available_updates",
@@ -362,7 +362,7 @@
           "properties.version"
         ]
       ],
-      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/allversions"
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/clusters/updates"
     },
     {
       "id": "update_runs",
@@ -398,7 +398,7 @@
           "properties.endTimeUtc"
         ]
       ],
-      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/allversions"
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/clusters/updates/updateruns"
     },
     {
       "id": "edge_devices",
@@ -430,7 +430,7 @@
           "properties.deviceType"
         ]
       ],
-      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/allversions"
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/edgedevices"
     },
     {
       "id": "gallery_images",
@@ -462,7 +462,7 @@
           "properties.osType"
         ]
       ],
-      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/allversions"
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/galleryimages"
     },
     {
       "id": "marketplace_images",
@@ -494,7 +494,7 @@
           "properties.osType"
         ]
       ],
-      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/allversions"
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/marketplacegalleryimages"
     },
     {
       "id": "logical_networks",
@@ -526,7 +526,7 @@
           "properties.vmSwitchName"
         ]
       ],
-      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/allversions"
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/logicalnetworks"
     },
     {
       "id": "network_interfaces",
@@ -558,7 +558,7 @@
           "properties.provisioningState"
         ]
       ],
-      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/allversions"
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/networkinterfaces"
     },
     {
       "id": "storage_containers",
@@ -590,7 +590,7 @@
           "properties.provisioningState"
         ]
       ],
-      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/allversions"
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/storagecontainers"
     },
     {
       "id": "virtual_hard_disks",
@@ -622,7 +622,7 @@
           "properties.provisioningState"
         ]
       ],
-      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/allversions"
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/virtualharddisks"
     },
     {
       "id": "vm_instances",
@@ -658,7 +658,7 @@
           "properties.status"
         ]
       ],
-      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/allversions"
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/virtualmachineinstances"
     },
     {
       "id": "vm_hardware",
@@ -694,7 +694,7 @@
           "properties.hardwareProfile.vmSize"
         ]
       ],
-      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/allversions"
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/virtualmachineinstances"
     },
     {
       "id": "vm_disks",
@@ -722,7 +722,7 @@
           "item"
         ]
       ],
-      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/allversions",
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/virtualmachineinstances",
       "expand": "properties.storageProfile.dataDisks"
     },
     {
@@ -751,7 +751,7 @@
           "item"
         ]
       ],
-      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/allversions",
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/virtualmachineinstances",
       "expand": "properties.networkProfile.networkInterfaces"
     },
     {
@@ -784,7 +784,7 @@
           "properties.status"
         ]
       ],
-      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/allversions"
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/virtualmachineinstances/guestagents"
     },
     {
       "id": "hybrid_identity",
@@ -816,7 +816,7 @@
           "properties.identity"
         ]
       ],
-      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/allversions"
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/virtualmachineinstances/hybrididentitymetadata"
     }
   ]
 }

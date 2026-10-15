@@ -1,0 +1,42 @@
+# Author: Paul Bryant
+name: Report a script problem
+description: Report a defect, version mismatch, or unclear result using sanitized information.
+title: "Report: "
+labels: []
+body:
+  - type: markdown
+    attributes:
+      value: "Please remove credentials, tokens, tenant IDs, private IP addresses, hostnames, and unredacted inventory before submitting. For a security issue, follow SECURITY.md."
+  - type: input
+    id: report
+    attributes:
+      label: Report name and language
+      placeholder: "vm_inventory, PowerShell"
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Product release and build
+      placeholder: "Azure Local 2506, OS build 26100.xxxx"
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected result
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual result or sanitized error
+    validations:
+      required: true
+  - type: textarea
+    id: shape
+    attributes:
+      label: Sanitized response shape or steps to reproduce
+      description: Include only the fields needed to show the problem.
+    validations:
+      required: false

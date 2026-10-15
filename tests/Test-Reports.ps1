@@ -12,6 +12,8 @@ foreach ($script in $scripts) {
     $errors = $null
     [System.Management.Automation.Language.Parser]::ParseFile($script.FullName, [ref]$tokens, [ref]$errors) | Out-Null
     if ($errors.Count) { throw "PowerShell parse error in $($script.FullName): $($errors[0])" }
+    $description = & $script.FullName -Describe
+    if (-not $description.id) { throw "PowerShell description failed in $($script.FullName)" }
 }
 
 $sample = Join-Path $root 'azure-cloud/powershell/Get-MsCloudVmInventory.ps1'
@@ -35,6 +37,23 @@ $plainReport.fields += ,@('name', 'name')
 $plainRows = @(ConvertTo-ReportRows @(@{ name = 'vm-one' }) $plainReport)
 if ($plainRows.Count -ne 1 -or $plainRows[0].name -ne 'vm-one') {
     throw 'PowerShell non-expanded report projection failed'
+}
+$fixture = Get-Content -LiteralPath (Join-Path $root 'tests/fixtures/report_cases.json') -Raw | ConvertFrom-Json -AsHashtable
+foreach ($case in $fixture.cases) {
+    $definition = Get-ReportDefinition $case.category $case.report
+    $fixtureResources = @($case.resources)
+    if ($case.ContainsKey('custom_location')) {
+        $fixtureResources = Select-CustomLocationResources $fixtureResources $case.custom_location
+    }
+    $fixtureRows = @(ConvertTo-ReportRows $fixtureResources $definition.Report)
+    if ($fixtureRows.Count -ne @($case.expected).Count) { throw "Fixture row count failed: $($case.category)/$($case.report)" }
+    for ($index = 0; $index -lt $fixtureRows.Count; $index++) {
+        foreach ($key in $case.expected[$index].Keys) {
+            $actual = ConvertTo-Json -InputObject $fixtureRows[$index].$key -Depth 100 -Compress
+            $expected = ConvertTo-Json -InputObject $case.expected[$index][$key] -Depth 100 -Compress
+            if ($actual -cne $expected) { throw "Fixture value failed: $($case.category)/$($case.report)/$key" }
+        }
+    }
 }
 if (-not (Test-ArgResultTruncated 'true')) { throw 'String truncation flag was not recognized' }
 if (Test-ArgResultTruncated 'false') { throw 'String false truncation flag was not recognized' }
@@ -65,6 +84,22 @@ $global:graphData = @([pscustomobject]@{ id = 'vm-id'; name = 'vm-one'; resource
 $actualReport = @(& $sample -SubscriptionId 'test-subscription')
 if ($actualReport.Count -ne 1 -or $actualReport[0].name -ne 'vm-one' -or $actualReport[0].vmSize -ne 'Standard_B2s') {
     throw 'PowerShell entry point did not project its catalog report'
+}
+$arcSample = Join-Path $root 'azure-local-sdn-arc-enabled/powershell/Get-MsSdnArcLogicalNetworks.ps1'
+$targetLocation = '/subscriptions/example/resourceGroups/sample/providers/Microsoft.ExtendedLocation/customLocations/one'
+$global:graphData = @(
+    [pscustomobject]@{ name = 'one'; extendedLocation = @{ name = $targetLocation } },
+    [pscustomobject]@{ name = 'two'; extendedLocation = @{ name = $targetLocation.Replace('/one', '/two') } }
+)
+$scopedReport = @(& $arcSample -SubscriptionId 'test-subscription' -CustomLocation $targetLocation)
+if ($scopedReport.Count -ne 1 -or $scopedReport[0].name -ne 'one') {
+    throw 'Arc entry point did not apply custom location scope'
+}
+try {
+    & $arcSample -SubscriptionId 'test-subscription' | Out-Null
+    throw 'Arc entry point accepted a missing custom location'
+} catch {
+    if ($_.Exception.Message -eq 'Arc entry point accepted a missing custom location') { throw }
 }
 $global:graphTruncated = 'true'
 try {

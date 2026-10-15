@@ -22,8 +22,10 @@ COMMON_NC = [["resourceId", "resourceId"], ["provisioningState", "properties.pro
 def arg(name: str, description: str, source_type: str, *fields: tuple[str, str],
         expand: str | None = None, condition: tuple[str, str, str | None] | None = None,
         docs: str = ARG_DOC) -> dict:
+    schema_doc = f"https://learn.microsoft.com/en-us/azure/templates/{source_type.lower()}"
     item = {"id": name, "description": description, "source_type": source_type.lower(),
-            "fields": COMMON_ARG + [list(field) for field in fields], "docs": docs}
+            "fields": COMMON_ARG + [list(field) for field in fields],
+            "docs": schema_doc if docs in (ARG_DOC, LOCAL_DOC, ARC_DOC) else docs}
     if expand:
         item["expand"] = expand
     if condition:
@@ -176,6 +178,17 @@ def script_name(report_id: str) -> str:
 
 
 def build() -> None:
+    compatibility = [
+        "# Report compatibility and evidence", "", "Author: Paul Bryant", "",
+        "All 100 report definitions have offline syntax, catalog, and entry point description checks. A smaller set has fictional projection fixtures. None has been run against a live Azure subscription, Azure Local system, or Network Controller. A linked schema documents a resource type or protocol, but does not prove that Azure Resource Graph projects every listed field or that a deployed version supports the endpoint.", "",
+        "The Azure reports query Azure Resource Graph REST API `2024-04-01` in Python or the installed `Az.ResourceGraph` module in PowerShell. They do not pin the underlying resource provider schema version. The on-premises SDN reports call Network Controller `/networking/v1`.", "",
+        "| Collection | Intended product family | Evidence |", "| --- | --- | --- |",
+        "| Azure Cloud | Rolling Azure services | [Resource Graph query API](https://learn.microsoft.com/en-us/rest/api/azureresourcegraph/resourcegraph/resources/resources) |",
+        "| Azure Local | Azure Local 24H2 / 12.x target | [Azure Local release information](https://learn.microsoft.com/en-us/azure/azure-local/release-information-23h2) |",
+        "| Azure Local SDN on premises | Azure Local 2311.2 or later, or Windows Server SDN | [SDN management overview](https://learn.microsoft.com/en-us/azure/azure-local/concepts/sdn-overview) |",
+        "| Azure Local SDN enabled by Arc | Azure Local 2506 or later with OS build 26100.xxxx | [SDN management overview](https://learn.microsoft.com/en-us/azure/azure-local/concepts/sdn-overview) |", "",
+        "Each entry below is **unverified in a live environment**. `ARG` means the Resource Graph query API above, and `NC` means the Network Controller protocol. The schema link points to Microsoft documentation for the resource type or endpoint family. Check the schema for the target deployment before relying on a report.", "",
+    ]
     for category, (title, prefix, reports, source) in CATEGORIES.items():
         if len(reports) != 25:
             raise ValueError(f"{category} contains {len(reports)} reports, expected 25")
@@ -190,15 +203,18 @@ def build() -> None:
         )
         lines = [f"# {title}", "", "Author: Paul Bryant", "", "Each report is available in PowerShell and Python. All reports read configuration only and export selected fields. Live behavior has not been validated.", ""]
         if category == "azure-local-sdn-arc-enabled":
-            lines.extend(["These reports inspect Azure Local network resources used with the Arc-enabled SDN management model. Logical networks and interfaces can also exist without SDN enabled by Arc. The resource type alone does not establish the management model. Confirm SDN enablement on the target Azure Local instance before interpreting these reports as an Arc-enabled SDN inventory.", ""])
+            lines.extend(["These reports inspect Azure Local network resources used with the Arc-enabled SDN management model. Logical networks and interfaces can also exist without SDN enabled by Arc. The resource type alone does not establish the management model. Confirm SDN enablement on the target Azure Local instance before interpreting these reports as an Arc-enabled SDN inventory.", "", "Provide `--custom-location` in Python or `-CustomLocation` in PowerShell with the full Azure custom location resource ID. Every Arc-enabled report requires it and includes only resources whose `extendedLocation.name` matches that ID. This limits the report to one location, but does not independently verify that SDN is enabled there.", ""])
         lines.extend(["| Report | PowerShell | Python |", "| --- | --- | --- |"])
+        compatibility.extend([f"## {title}", "", "| Report | Source and API | Microsoft reference |", "| --- | --- | --- |"])
         for report in reports:
             name = script_name(report["id"])
             ps_name = f"Get-{prefix}{name}.ps1"
             py_name = f"get_{report['id']}.py"
             if source == "arg":
-                ps_params = "[string[]]$SubscriptionId, [string]$OutputPath, [switch]$Describe"
-                ps_call = f"Invoke-Report -Category '{category}' -ReportId '{report['id']}' -SubscriptionId $SubscriptionId -OutputPath $OutputPath -Describe:$Describe"
+                arc_param = ", [string]$CustomLocation" if category == "azure-local-sdn-arc-enabled" else ""
+                arc_call = " -CustomLocation $CustomLocation" if category == "azure-local-sdn-arc-enabled" else ""
+                ps_params = f"[string[]]$SubscriptionId{arc_param}, [string]$OutputPath, [switch]$Describe"
+                ps_call = f"Invoke-Report -Category '{category}' -ReportId '{report['id']}' -SubscriptionId $SubscriptionId{arc_call} -OutputPath $OutputPath -Describe:$Describe"
             else:
                 ps_params = "[string]$ControllerUri, [string]$OutputPath, [switch]$Describe"
                 ps_call = f"Invoke-Report -Category '{category}' -ReportId '{report['id']}' -ControllerUri $ControllerUri -OutputPath $OutputPath -Describe:$Describe"
@@ -216,11 +232,17 @@ def build() -> None:
                 "if __name__ == '__main__':\n"
                 f"    main('{category}', '{report['id']}')\n"
             )
+            source_label = f"`ARG: {report['source_type']}`" if source == "arg" else f"`NC: /networking/v1/{report['source']}`"
+            if source == "nc" and report.get("child"):
+                source_label = f"`NC: /networking/v1/{report['source']}/{{id}}/{report['child']}`"
+            compatibility.append(f"| [`{report['id']}`]({category}/python/{py_name}) | {source_label} | [Schema or protocol]({report['docs']}) |")
             (directory / "powershell" / ps_name).write_text(ps_content, encoding="utf-8")
             (directory / "python" / py_name).write_text(py_content, encoding="utf-8")
             lines.append(f"| {report['description']} | [PowerShell](powershell/{ps_name}) | [Python](python/{py_name}) |")
         lines.extend(["", "See the [repository guide](../README.md) for setup, credentials, scope and known limits.", ""])
         (directory / "README.md").write_text("\n".join(lines), encoding="utf-8")
+        compatibility.append("")
+    (ROOT / "COMPATIBILITY.md").write_text("\n".join(compatibility), encoding="utf-8")
 
 
 if __name__ == "__main__":

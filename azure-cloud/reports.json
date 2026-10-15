@@ -37,7 +37,7 @@
           "properties.provisioningState"
         ]
       ],
-      "docs": "https://learn.microsoft.com/en-us/rest/api/azureresourcegraph/resourcegraph/resources/resources"
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.compute/virtualmachines"
     },
     {
       "id": "vm_images",
@@ -77,7 +77,7 @@
           "properties.storageProfile.imageReference.sku"
         ]
       ],
-      "docs": "https://learn.microsoft.com/en-us/rest/api/azureresourcegraph/resourcegraph/resources/resources"
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.compute/virtualmachines"
     },
     {
       "id": "vm_os_disks",
@@ -113,7 +113,7 @@
           "properties.storageProfile.osDisk.caching"
         ]
       ],
-      "docs": "https://learn.microsoft.com/en-us/rest/api/azureresourcegraph/resourcegraph/resources/resources"
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.compute/virtualmachines"
     },
     {
       "id": "vm_data_disks",
@@ -149,7 +149,7 @@
           "item.managedDisk.id"
         ]
       ],
-      "docs": "https://learn.microsoft.com/en-us/rest/api/azureresourcegraph/resourcegraph/resources/resources",
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.compute/virtualmachines",
       "expand": "properties.storageProfile.dataDisks"
     },
     {
@@ -182,7 +182,7 @@
           "item.properties.primary"
         ]
       ],
-      "docs": "https://learn.microsoft.com/en-us/rest/api/azureresourcegraph/resourcegraph/resources/resources",
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.compute/virtualmachines",
       "expand": "properties.networkProfile.networkInterfaces"
     },
     {
@@ -223,7 +223,7 @@
           "sku.name"
         ]
       ],
-      "docs": "https://learn.microsoft.com/en-us/rest/api/azureresourcegraph/resourcegraph/resources/resources"
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.compute/disks"
     },
     {
       "id": "unattached_disks",
@@ -255,7 +255,7 @@
           "sku.name"
         ]
       ],
-      "docs": "https://learn.microsoft.com/en-us/rest/api/azureresourcegraph/resourcegraph/resources/resources",
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.compute/disks",
       "filter": {
         "path": "properties.diskState",
         "op": "eq",
@@ -296,7 +296,7 @@
           "properties.securityProfile.securityType"
         ]
       ],
-      "docs": "https://learn.microsoft.com/en-us/rest/api/azureresourcegraph/resourcegraph/resources/resources"
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.compute/disks"
     },
     {
       "id": "snapshots",
@@ -332,7 +332,7 @@
           "properties.creationData.sourceResourceId"
         ]
       ],
-      "docs": "https://learn.microsoft.com/en-us/rest/api/azureresourcegraph/resourcegraph/resources/resources"
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.compute/snapshots"
     },
     {
       "id": "vm_scale_sets",
@@ -368,7 +368,7 @@
           "sku.name"
         ]
       ],
-      "docs": "https://learn.microsoft.com/en-us/rest/api/azureresourcegraph/resourcegraph/resources/resources"
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.compute/virtualmachinescalesets"
     },
     {
       "id": "availability_sets",
@@ -400,7 +400,7 @@
           "properties.platformUpdateDomainCount"
         ]
       ],
-      "docs": "https://learn.microsoft.com/en-us/rest/api/azureresourcegraph/resourcegraph/resources/resources"
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.compute/availabilitysets"
     },
     {
       "id": "virtual_networks",
@@ -436,7 +436,7 @@
           "properties.provisioningState"
         ]
       ],
-      "docs": "https://learn.microsoft.com/en-us/rest/api/azureresourcegraph/resourcegraph/resources/resources"
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.network/virtualnetworks"
     },
     {
       "id": "subnets",
@@ -472,7 +472,7 @@
           "item.properties.addressPrefixes"
         ]
       ],
-      "docs": "https://learn.microsoft.com/en-us/rest/api/azureresourcegraph/resourcegraph/resources/resources",
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.network/virtualnetworks",
       "expand": "properties.subnets"
     },
     {
@@ -509,7 +509,7 @@
           "item.properties.peeringState"
         ]
       ],
-      "docs": "https://learn.microsoft.com/en-us/rest/api/azureresourcegraph/resourcegraph/resources/resources",
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.network/virtualnetworks",
       "expand": "properties.virtualNetworkPeerings"
     },
     {
@@ -546,7 +546,7 @@
           "properties.networkInterfaces"
         ]
       ],
-      "docs": "https://learn.microsoft.com/en-us/rest/api/azureresourcegraph/resourcegraph/resources/resources"
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.network/networksecuritygroups"
     },
     {
       "id": "nsg_rules",
@@ -586,7 +586,7 @@
           "item.properties.priority"
         ]
       ],
-      "docs": "https://learn.microsoft.com/en-us/rest/api/azureresourcegraph/resourcegraph/resources/resources",
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.network/networksecuritygroups",
       "expand": "properties.securityRules"
     },
     {
@@ -619,7 +619,7 @@
           "properties.disableBgpRoutePropagation"
         ]
       ],
-      "docs": "https://learn.microsoft.com/en-us/rest/api/azureresourcegraph/resourcegraph/resources/resources"
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.network/routetables"
     },
     {
       "id": "routes",
@@ -659,7 +659,7 @@
           "item.properties.nextHopIpAddress"
         ]
       ],
-      "docs": "https://learn.microsoft.com/en-us/rest/api/azureresourcegraph/resourcegraph/resources/resources",
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.network/routetables",
       "expand": "properties.routes"
     },
     {
@@ -700,7 +700,7 @@
           "sku.name"
         ]
       ],
-      "docs": "https://learn.microsoft.com/en-us/rest/api/azureresourcegraph/resourcegraph/resources/resources"
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.network/publicipaddresses"
     },
     {
       "id": "load_balancers",
@@ -736,7 +736,7 @@
           "properties.frontendIPConfigurations"
         ]
       ],
-      "docs": "https://learn.microsoft.com/en-us/rest/api/azureresourcegraph/resourcegraph/resources/resources"
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.network/loadbalancers"
     },
     {
       "id": "storage_accounts",
@@ -776,7 +776,7 @@
           "properties.networkAcls.defaultAction"
         ]
       ],
-      "docs": "https://learn.microsoft.com/en-us/rest/api/azureresourcegraph/resourcegraph/resources/resources"
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.storage/storageaccounts"
     },
     {
       "id": "key_vaults",
@@ -812,7 +812,7 @@
           "properties.publicNetworkAccess"
         ]
       ],
-      "docs": "https://learn.microsoft.com/en-us/rest/api/azureresourcegraph/resourcegraph/resources/resources"
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.keyvault/vaults"
     },
     {
       "id": "sql_servers",
@@ -848,7 +848,7 @@
           "properties.administratorLogin"
         ]
       ],
-      "docs": "https://learn.microsoft.com/en-us/rest/api/azureresourcegraph/resourcegraph/resources/resources"
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.sql/servers"
     },
     {
       "id": "sql_databases",
@@ -884,7 +884,7 @@
           "sku.name"
         ]
       ],
-      "docs": "https://learn.microsoft.com/en-us/rest/api/azureresourcegraph/resourcegraph/resources/resources"
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.sql/servers/databases"
     },
     {
       "id": "app_services",
@@ -924,7 +924,7 @@
           "properties.httpsOnly"
         ]
       ],
-      "docs": "https://learn.microsoft.com/en-us/rest/api/azureresourcegraph/resourcegraph/resources/resources"
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.web/sites"
     }
   ]
 }

@@ -6,23 +6,77 @@ Author: Paul Bryant
 from __future__ import annotations
 
 import csv
+import io
+import json
+import subprocess
 import sys
 import tempfile
 import types
 import unittest
 from pathlib import Path
+from contextlib import redirect_stdout, redirect_stderr
 from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "_shared"))
 
 from reporting import (  # noqa: E402
-    _items, _result_truncated, azure_resources, catalog, csv_cell, network_controller_resources,
-    report_rows, write_csv,
+    _items, _result_truncated, azure_resources, catalog, csv_cell, main, network_controller_resources,
+    report_rows, scope_custom_location, write_csv,
 )
 
 
 class ReportTests(unittest.TestCase):
+    def test_offline_resource_examples(self) -> None:
+        fixture = json.loads((ROOT / "tests" / "fixtures" / "report_cases.json").read_text(encoding="utf-8"))
+        for case in fixture["cases"]:
+            with self.subTest(category=case["category"], report=case["report"]):
+                spec = next(entry for entry in catalog(case["category"])["reports"]
+                            if entry["id"] == case["report"])
+                resources = case["resources"]
+                if "custom_location" in case:
+                    resources = scope_custom_location(resources, case["custom_location"])
+                rows = report_rows(resources, spec)
+                self.assertEqual(len(rows), len(case["expected"]))
+                for row, expected in zip(rows, case["expected"]):
+                    for key, value in expected.items():
+                        self.assertEqual(row[key], value)
+
+    def test_all_python_entry_points_describe_without_a_connection(self) -> None:
+        for category in ("azure-cloud", "azure-local", "azure-local-sdn-onprem",
+                         "azure-local-sdn-arc-enabled"):
+            for path in (ROOT / category / "python").glob("*.py"):
+                with self.subTest(path=path.name):
+                    result = subprocess.run([sys.executable, str(path), "--describe"],
+                                            capture_output=True, text=True, timeout=10, check=True)
+                    self.assertIn("id", json.loads(result.stdout))
+
+    def test_custom_location_scope(self) -> None:
+        resources = [{"extendedLocation": {"name": "/subscriptions/example/resourceGroups/sample/providers/Microsoft.ExtendedLocation/customLocations/one"}},
+                     {"extendedLocation": {"name": "/subscriptions/example/resourceGroups/sample/providers/Microsoft.ExtendedLocation/customLocations/two"}}]
+        self.assertEqual(scope_custom_location(resources, "/subscriptions/example/resourceGroups/sample/providers/Microsoft.ExtendedLocation/customLocations/ONE/"),
+                         [resources[0]])
+        with self.assertRaises(ValueError):
+            scope_custom_location(resources, " ")
+
+    def test_arc_entry_point_requires_and_applies_custom_location(self) -> None:
+        target = "/subscriptions/example/resourceGroups/sample/providers/Microsoft.ExtendedLocation/customLocations/one"
+        resources = [
+            {"name": "one", "extendedLocation": {"name": target}},
+            {"name": "two", "extendedLocation": {"name": target.replace("/one", "/two")}},
+        ]
+        with patch.object(sys, "argv", ["report", "--subscription", "example"]):
+            with redirect_stderr(io.StringIO()), self.assertRaises(SystemExit) as error:
+                main("azure-local-sdn-arc-enabled", "logical_networks")
+        self.assertEqual(error.exception.code, 2)
+        output = io.StringIO()
+        with patch.object(sys, "argv", ["report", "--subscription", "example", "--custom-location", target]):
+            with patch("reporting.azure_resources", return_value=resources):
+                with redirect_stdout(output):
+                    main("azure-local-sdn-arc-enabled", "logical_networks")
+        rows = list(csv.DictReader(io.StringIO(output.getvalue())))
+        self.assertEqual([row["name"] for row in rows], ["one"])
+
     def test_result_truncated_accepts_documented_text_and_booleans(self) -> None:
         self.assertTrue(_result_truncated("true"))
         self.assertTrue(_result_truncated(True))
