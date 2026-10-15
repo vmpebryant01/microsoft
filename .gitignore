@@ -1,0 +1,7 @@
+# Author: Paul Bryant
+__pycache__/
+*.py[cod]
+.venv/
+.env
+*.csv
+!csv_samples/*.csv

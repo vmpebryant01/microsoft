@@ -1,0 +1,5 @@
+# Report network interface references on Azure Local VMs.
+# Author: Paul Bryant
+param([string[]]$SubscriptionId, [string]$OutputPath, [switch]$Describe)
+. (Join-Path $PSScriptRoot '..\..\_shared\ReportEngine.ps1')
+Invoke-Report -Category 'azure-local' -ReportId 'vm_network_adapters' -SubscriptionId $SubscriptionId -OutputPath $OutputPath -Describe:$Describe

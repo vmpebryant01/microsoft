@@ -1,0 +1,861 @@
+{
+  "author": "Paul Bryant",
+  "category": "azure-local-sdn-arc-enabled",
+  "source": "arg",
+  "reports": [
+    {
+      "id": "logical_networks",
+      "description": "Inventory Azure Local logical networks projected into Azure.",
+      "source_type": "microsoft.azurestackhci/logicalnetworks",
+      "fields": [
+        [
+          "id",
+          "id"
+        ],
+        [
+          "name",
+          "name"
+        ],
+        [
+          "resourceGroup",
+          "resourceGroup"
+        ],
+        [
+          "subscriptionId",
+          "subscriptionId"
+        ],
+        [
+          "location",
+          "location"
+        ],
+        [
+          "customLocation",
+          "extendedLocation.name"
+        ],
+        [
+          "provisioningState",
+          "properties.provisioningState"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/azure/azure-local/concepts/sdn-overview"
+    },
+    {
+      "id": "logical_network_addressing",
+      "description": "Report logical network subnets and DNS settings.",
+      "source_type": "microsoft.azurestackhci/logicalnetworks",
+      "fields": [
+        [
+          "id",
+          "id"
+        ],
+        [
+          "name",
+          "name"
+        ],
+        [
+          "resourceGroup",
+          "resourceGroup"
+        ],
+        [
+          "subscriptionId",
+          "subscriptionId"
+        ],
+        [
+          "subnets",
+          "properties.subnets"
+        ],
+        [
+          "dnsServers",
+          "properties.dhcpOptions.dnsServers"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/azure/azure-local/concepts/sdn-overview"
+    },
+    {
+      "id": "logical_network_vlans",
+      "description": "Report VLAN identifiers on Azure Local logical network subnets.",
+      "source_type": "microsoft.azurestackhci/logicalnetworks",
+      "fields": [
+        [
+          "id",
+          "id"
+        ],
+        [
+          "name",
+          "name"
+        ],
+        [
+          "resourceGroup",
+          "resourceGroup"
+        ],
+        [
+          "subscriptionId",
+          "subscriptionId"
+        ],
+        [
+          "subnetName",
+          "item.name"
+        ],
+        [
+          "vlan",
+          "item.properties.vlan"
+        ],
+        [
+          "addressPrefix",
+          "item.properties.addressPrefix"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/azure/azure-local/concepts/sdn-overview",
+      "expand": "properties.subnets"
+    },
+    {
+      "id": "logical_network_subnets",
+      "description": "Report subnet definitions within Azure Local logical networks.",
+      "source_type": "microsoft.azurestackhci/logicalnetworks",
+      "fields": [
+        [
+          "id",
+          "id"
+        ],
+        [
+          "name",
+          "name"
+        ],
+        [
+          "resourceGroup",
+          "resourceGroup"
+        ],
+        [
+          "subscriptionId",
+          "subscriptionId"
+        ],
+        [
+          "subnet",
+          "item"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/azure/azure-local/concepts/sdn-overview",
+      "expand": "properties.subnets"
+    },
+    {
+      "id": "logical_network_ip_pools",
+      "description": "Report IP pools by Azure Local logical network subnet.",
+      "source_type": "microsoft.azurestackhci/logicalnetworks",
+      "fields": [
+        [
+          "id",
+          "id"
+        ],
+        [
+          "name",
+          "name"
+        ],
+        [
+          "resourceGroup",
+          "resourceGroup"
+        ],
+        [
+          "subscriptionId",
+          "subscriptionId"
+        ],
+        [
+          "subnetName",
+          "item.name"
+        ],
+        [
+          "ipPools",
+          "item.properties.ipPools"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/azure/azure-local/concepts/sdn-overview",
+      "expand": "properties.subnets"
+    },
+    {
+      "id": "logical_network_custom_locations",
+      "description": "Map Azure Local logical networks to custom locations.",
+      "source_type": "microsoft.azurestackhci/logicalnetworks",
+      "fields": [
+        [
+          "id",
+          "id"
+        ],
+        [
+          "name",
+          "name"
+        ],
+        [
+          "resourceGroup",
+          "resourceGroup"
+        ],
+        [
+          "subscriptionId",
+          "subscriptionId"
+        ],
+        [
+          "customLocation",
+          "extendedLocation.name"
+        ],
+        [
+          "vmSwitchName",
+          "properties.vmSwitchName"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/azure/azure-local/concepts/sdn-overview"
+    },
+    {
+      "id": "logical_network_not_succeeded",
+      "description": "Find logical networks without a Succeeded provisioning state.",
+      "source_type": "microsoft.azurestackhci/logicalnetworks",
+      "fields": [
+        [
+          "id",
+          "id"
+        ],
+        [
+          "name",
+          "name"
+        ],
+        [
+          "resourceGroup",
+          "resourceGroup"
+        ],
+        [
+          "subscriptionId",
+          "subscriptionId"
+        ],
+        [
+          "provisioningState",
+          "properties.provisioningState"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/azure/azure-local/concepts/sdn-overview",
+      "filter": {
+        "path": "properties.provisioningState",
+        "op": "ne",
+        "value": "Succeeded"
+      }
+    },
+    {
+      "id": "network_interfaces",
+      "description": "Inventory Azure Local network interfaces projected into Azure.",
+      "source_type": "microsoft.azurestackhci/networkinterfaces",
+      "fields": [
+        [
+          "id",
+          "id"
+        ],
+        [
+          "name",
+          "name"
+        ],
+        [
+          "resourceGroup",
+          "resourceGroup"
+        ],
+        [
+          "subscriptionId",
+          "subscriptionId"
+        ],
+        [
+          "location",
+          "location"
+        ],
+        [
+          "customLocation",
+          "extendedLocation.name"
+        ],
+        [
+          "provisioningState",
+          "properties.provisioningState"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/azure/azure-local/concepts/sdn-overview"
+    },
+    {
+      "id": "nic_ip_configurations",
+      "description": "Report Azure Local network interface IP configurations.",
+      "source_type": "microsoft.azurestackhci/networkinterfaces",
+      "fields": [
+        [
+          "id",
+          "id"
+        ],
+        [
+          "name",
+          "name"
+        ],
+        [
+          "resourceGroup",
+          "resourceGroup"
+        ],
+        [
+          "subscriptionId",
+          "subscriptionId"
+        ],
+        [
+          "ipConfiguration",
+          "item"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/azure/azure-local/concepts/sdn-overview",
+      "expand": "properties.ipConfigurations"
+    },
+    {
+      "id": "nic_private_ips",
+      "description": "Report private IP addresses assigned to Azure Local interfaces.",
+      "source_type": "microsoft.azurestackhci/networkinterfaces",
+      "fields": [
+        [
+          "id",
+          "id"
+        ],
+        [
+          "name",
+          "name"
+        ],
+        [
+          "resourceGroup",
+          "resourceGroup"
+        ],
+        [
+          "subscriptionId",
+          "subscriptionId"
+        ],
+        [
+          "privateIpAddress",
+          "item.properties.privateIPAddress"
+        ],
+        [
+          "subnetId",
+          "item.properties.subnet.id"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/azure/azure-local/concepts/sdn-overview",
+      "expand": "properties.ipConfigurations"
+    },
+    {
+      "id": "nic_security_groups",
+      "description": "Report security group references on Azure Local interfaces.",
+      "source_type": "microsoft.azurestackhci/networkinterfaces",
+      "fields": [
+        [
+          "id",
+          "id"
+        ],
+        [
+          "name",
+          "name"
+        ],
+        [
+          "resourceGroup",
+          "resourceGroup"
+        ],
+        [
+          "subscriptionId",
+          "subscriptionId"
+        ],
+        [
+          "nsgId",
+          "properties.networkSecurityGroup.id"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/azure/azure-local/concepts/sdn-overview"
+    },
+    {
+      "id": "nic_without_security_group",
+      "description": "Find Azure Local interfaces without an NSG reference.",
+      "source_type": "microsoft.azurestackhci/networkinterfaces",
+      "fields": [
+        [
+          "id",
+          "id"
+        ],
+        [
+          "name",
+          "name"
+        ],
+        [
+          "resourceGroup",
+          "resourceGroup"
+        ],
+        [
+          "subscriptionId",
+          "subscriptionId"
+        ],
+        [
+          "customLocation",
+          "extendedLocation.name"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/azure/azure-local/concepts/sdn-overview",
+      "filter": {
+        "path": "properties.networkSecurityGroup.id",
+        "op": "missing"
+      }
+    },
+    {
+      "id": "nic_not_succeeded",
+      "description": "Find Azure Local interfaces without a Succeeded provisioning state.",
+      "source_type": "microsoft.azurestackhci/networkinterfaces",
+      "fields": [
+        [
+          "id",
+          "id"
+        ],
+        [
+          "name",
+          "name"
+        ],
+        [
+          "resourceGroup",
+          "resourceGroup"
+        ],
+        [
+          "subscriptionId",
+          "subscriptionId"
+        ],
+        [
+          "provisioningState",
+          "properties.provisioningState"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/azure/azure-local/concepts/sdn-overview",
+      "filter": {
+        "path": "properties.provisioningState",
+        "op": "ne",
+        "value": "Succeeded"
+      }
+    },
+    {
+      "id": "security_groups",
+      "description": "Inventory Azure Local network security groups.",
+      "source_type": "microsoft.azurestackhci/networksecuritygroups",
+      "fields": [
+        [
+          "id",
+          "id"
+        ],
+        [
+          "name",
+          "name"
+        ],
+        [
+          "resourceGroup",
+          "resourceGroup"
+        ],
+        [
+          "subscriptionId",
+          "subscriptionId"
+        ],
+        [
+          "customLocation",
+          "extendedLocation.name"
+        ],
+        [
+          "provisioningState",
+          "properties.provisioningState"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/azure/azure-local/concepts/sdn-overview"
+    },
+    {
+      "id": "nsg_network_interfaces",
+      "description": "Report interfaces associated with Azure Local NSGs.",
+      "source_type": "microsoft.azurestackhci/networksecuritygroups",
+      "fields": [
+        [
+          "id",
+          "id"
+        ],
+        [
+          "name",
+          "name"
+        ],
+        [
+          "resourceGroup",
+          "resourceGroup"
+        ],
+        [
+          "subscriptionId",
+          "subscriptionId"
+        ],
+        [
+          "networkInterface",
+          "item.id"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/azure/azure-local/concepts/sdn-overview",
+      "expand": "properties.networkInterfaces"
+    },
+    {
+      "id": "nsg_subnets",
+      "description": "Report logical network subnets associated with NSGs.",
+      "source_type": "microsoft.azurestackhci/networksecuritygroups",
+      "fields": [
+        [
+          "id",
+          "id"
+        ],
+        [
+          "name",
+          "name"
+        ],
+        [
+          "resourceGroup",
+          "resourceGroup"
+        ],
+        [
+          "subscriptionId",
+          "subscriptionId"
+        ],
+        [
+          "subnet",
+          "item.id"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/azure/azure-local/concepts/sdn-overview",
+      "expand": "properties.subnets"
+    },
+    {
+      "id": "nsg_not_succeeded",
+      "description": "Find Azure Local NSGs without a Succeeded provisioning state.",
+      "source_type": "microsoft.azurestackhci/networksecuritygroups",
+      "fields": [
+        [
+          "id",
+          "id"
+        ],
+        [
+          "name",
+          "name"
+        ],
+        [
+          "resourceGroup",
+          "resourceGroup"
+        ],
+        [
+          "subscriptionId",
+          "subscriptionId"
+        ],
+        [
+          "provisioningState",
+          "properties.provisioningState"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/azure/azure-local/concepts/sdn-overview",
+      "filter": {
+        "path": "properties.provisioningState",
+        "op": "ne",
+        "value": "Succeeded"
+      }
+    },
+    {
+      "id": "security_rules",
+      "description": "Inventory Azure Local SDN security rules.",
+      "source_type": "microsoft.azurestackhci/networksecuritygroups/securityrules",
+      "fields": [
+        [
+          "id",
+          "id"
+        ],
+        [
+          "name",
+          "name"
+        ],
+        [
+          "resourceGroup",
+          "resourceGroup"
+        ],
+        [
+          "subscriptionId",
+          "subscriptionId"
+        ],
+        [
+          "direction",
+          "properties.direction"
+        ],
+        [
+          "access",
+          "properties.access"
+        ],
+        [
+          "priority",
+          "properties.priority"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/azure/azure-local/concepts/sdn-overview"
+    },
+    {
+      "id": "inbound_rules",
+      "description": "Report inbound Azure Local SDN security rules.",
+      "source_type": "microsoft.azurestackhci/networksecuritygroups/securityrules",
+      "fields": [
+        [
+          "id",
+          "id"
+        ],
+        [
+          "name",
+          "name"
+        ],
+        [
+          "resourceGroup",
+          "resourceGroup"
+        ],
+        [
+          "subscriptionId",
+          "subscriptionId"
+        ],
+        [
+          "access",
+          "properties.access"
+        ],
+        [
+          "protocol",
+          "properties.protocol"
+        ],
+        [
+          "priority",
+          "properties.priority"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/azure/azure-local/concepts/sdn-overview",
+      "filter": {
+        "path": "properties.direction",
+        "op": "eq",
+        "value": "Inbound"
+      }
+    },
+    {
+      "id": "outbound_rules",
+      "description": "Report outbound Azure Local SDN security rules.",
+      "source_type": "microsoft.azurestackhci/networksecuritygroups/securityrules",
+      "fields": [
+        [
+          "id",
+          "id"
+        ],
+        [
+          "name",
+          "name"
+        ],
+        [
+          "resourceGroup",
+          "resourceGroup"
+        ],
+        [
+          "subscriptionId",
+          "subscriptionId"
+        ],
+        [
+          "access",
+          "properties.access"
+        ],
+        [
+          "protocol",
+          "properties.protocol"
+        ],
+        [
+          "priority",
+          "properties.priority"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/azure/azure-local/concepts/sdn-overview",
+      "filter": {
+        "path": "properties.direction",
+        "op": "eq",
+        "value": "Outbound"
+      }
+    },
+    {
+      "id": "allow_rules",
+      "description": "Report Azure Local SDN rules that allow traffic.",
+      "source_type": "microsoft.azurestackhci/networksecuritygroups/securityrules",
+      "fields": [
+        [
+          "id",
+          "id"
+        ],
+        [
+          "name",
+          "name"
+        ],
+        [
+          "resourceGroup",
+          "resourceGroup"
+        ],
+        [
+          "subscriptionId",
+          "subscriptionId"
+        ],
+        [
+          "direction",
+          "properties.direction"
+        ],
+        [
+          "sourcePrefixes",
+          "properties.sourceAddressPrefixes"
+        ],
+        [
+          "destinationPorts",
+          "properties.destinationPortRanges"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/azure/azure-local/concepts/sdn-overview",
+      "filter": {
+        "path": "properties.access",
+        "op": "eq",
+        "value": "Allow"
+      }
+    },
+    {
+      "id": "deny_rules",
+      "description": "Report Azure Local SDN rules that deny traffic.",
+      "source_type": "microsoft.azurestackhci/networksecuritygroups/securityrules",
+      "fields": [
+        [
+          "id",
+          "id"
+        ],
+        [
+          "name",
+          "name"
+        ],
+        [
+          "resourceGroup",
+          "resourceGroup"
+        ],
+        [
+          "subscriptionId",
+          "subscriptionId"
+        ],
+        [
+          "direction",
+          "properties.direction"
+        ],
+        [
+          "sourcePrefixes",
+          "properties.sourceAddressPrefixes"
+        ],
+        [
+          "destinationPorts",
+          "properties.destinationPortRanges"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/azure/azure-local/concepts/sdn-overview",
+      "filter": {
+        "path": "properties.access",
+        "op": "eq",
+        "value": "Deny"
+      }
+    },
+    {
+      "id": "rule_sources",
+      "description": "Report source prefixes and ports for Azure Local rules.",
+      "source_type": "microsoft.azurestackhci/networksecuritygroups/securityrules",
+      "fields": [
+        [
+          "id",
+          "id"
+        ],
+        [
+          "name",
+          "name"
+        ],
+        [
+          "resourceGroup",
+          "resourceGroup"
+        ],
+        [
+          "subscriptionId",
+          "subscriptionId"
+        ],
+        [
+          "sourcePrefixes",
+          "properties.sourceAddressPrefixes"
+        ],
+        [
+          "sourcePorts",
+          "properties.sourcePortRanges"
+        ],
+        [
+          "direction",
+          "properties.direction"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/azure/azure-local/concepts/sdn-overview"
+    },
+    {
+      "id": "rule_destinations",
+      "description": "Report destination prefixes and ports for Azure Local rules.",
+      "source_type": "microsoft.azurestackhci/networksecuritygroups/securityrules",
+      "fields": [
+        [
+          "id",
+          "id"
+        ],
+        [
+          "name",
+          "name"
+        ],
+        [
+          "resourceGroup",
+          "resourceGroup"
+        ],
+        [
+          "subscriptionId",
+          "subscriptionId"
+        ],
+        [
+          "destinationPrefixes",
+          "properties.destinationAddressPrefixes"
+        ],
+        [
+          "destinationPorts",
+          "properties.destinationPortRanges"
+        ],
+        [
+          "direction",
+          "properties.direction"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/azure/azure-local/concepts/sdn-overview"
+    },
+    {
+      "id": "rule_protocols",
+      "description": "Report protocol, priority and access for Azure Local rules.",
+      "source_type": "microsoft.azurestackhci/networksecuritygroups/securityrules",
+      "fields": [
+        [
+          "id",
+          "id"
+        ],
+        [
+          "name",
+          "name"
+        ],
+        [
+          "resourceGroup",
+          "resourceGroup"
+        ],
+        [
+          "subscriptionId",
+          "subscriptionId"
+        ],
+        [
+          "protocol",
+          "properties.protocol"
+        ],
+        [
+          "priority",
+          "properties.priority"
+        ],
+        [
+          "access",
+          "properties.access"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/azure/azure-local/concepts/sdn-overview"
+    }
+  ]
+}

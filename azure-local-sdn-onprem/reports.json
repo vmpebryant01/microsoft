@@ -1,0 +1,683 @@
+{
+  "author": "Paul Bryant",
+  "category": "azure-local-sdn-onprem",
+  "source": "nc",
+  "reports": [
+    {
+      "id": "logical_networks",
+      "description": "Inventory Network Controller logical networks.",
+      "source": "logicalNetworks",
+      "fields": [
+        [
+          "resourceId",
+          "resourceId"
+        ],
+        [
+          "provisioningState",
+          "properties.provisioningState"
+        ],
+        [
+          "subnets",
+          "properties.subnets"
+        ],
+        [
+          "networkVirtualizationEnabled",
+          "properties.networkVirtualizationEnabled"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-ncnbi/6dbabf43-0fcd-439c-81e2-7eb794f7c140"
+    },
+    {
+      "id": "logical_subnets",
+      "description": "Report logical subnets and VLANs.",
+      "source": "logicalNetworks",
+      "fields": [
+        [
+          "resourceId",
+          "resourceId"
+        ],
+        [
+          "provisioningState",
+          "properties.provisioningState"
+        ],
+        [
+          "parentId",
+          "parentId"
+        ],
+        [
+          "addressPrefix",
+          "properties.addressPrefix"
+        ],
+        [
+          "vlanId",
+          "properties.vlanId"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-ncnbi/6dbabf43-0fcd-439c-81e2-7eb794f7c140",
+      "child": "subnets"
+    },
+    {
+      "id": "virtual_networks",
+      "description": "Inventory tenant virtual networks.",
+      "source": "virtualNetworks",
+      "fields": [
+        [
+          "resourceId",
+          "resourceId"
+        ],
+        [
+          "provisioningState",
+          "properties.provisioningState"
+        ],
+        [
+          "addressSpace",
+          "properties.addressSpace"
+        ],
+        [
+          "logicalNetwork",
+          "properties.logicalNetwork"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-ncnbi/6dbabf43-0fcd-439c-81e2-7eb794f7c140"
+    },
+    {
+      "id": "virtual_subnets",
+      "description": "Report tenant virtual network subnets.",
+      "source": "virtualNetworks",
+      "fields": [
+        [
+          "resourceId",
+          "resourceId"
+        ],
+        [
+          "provisioningState",
+          "properties.provisioningState"
+        ],
+        [
+          "parentId",
+          "parentId"
+        ],
+        [
+          "addressPrefix",
+          "properties.addressPrefix"
+        ],
+        [
+          "accessControlList",
+          "properties.accessControlList"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-ncnbi/6dbabf43-0fcd-439c-81e2-7eb794f7c140",
+      "child": "subnets"
+    },
+    {
+      "id": "network_interfaces",
+      "description": "Inventory Network Controller network interfaces.",
+      "source": "networkInterfaces",
+      "fields": [
+        [
+          "resourceId",
+          "resourceId"
+        ],
+        [
+          "provisioningState",
+          "properties.provisioningState"
+        ],
+        [
+          "privateMacAddress",
+          "properties.privateMacAddress"
+        ],
+        [
+          "server",
+          "properties.server"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-ncnbi/6dbabf43-0fcd-439c-81e2-7eb794f7c140"
+    },
+    {
+      "id": "nic_ip_configurations",
+      "description": "Report Network Controller NIC IP configurations.",
+      "source": "networkInterfaces",
+      "fields": [
+        [
+          "resourceId",
+          "resourceId"
+        ],
+        [
+          "provisioningState",
+          "properties.provisioningState"
+        ],
+        [
+          "parentId",
+          "parentId"
+        ],
+        [
+          "privateIPAddress",
+          "properties.privateIPAddress"
+        ],
+        [
+          "subnet",
+          "properties.subnet"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-ncnbi/6dbabf43-0fcd-439c-81e2-7eb794f7c140",
+      "child": "ipConfigurations"
+    },
+    {
+      "id": "access_control_lists",
+      "description": "Inventory SDN access control lists.",
+      "source": "accessControlLists",
+      "fields": [
+        [
+          "resourceId",
+          "resourceId"
+        ],
+        [
+          "provisioningState",
+          "properties.provisioningState"
+        ],
+        [
+          "rules",
+          "properties.aclRules"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-ncnbi/6dbabf43-0fcd-439c-81e2-7eb794f7c140"
+    },
+    {
+      "id": "acl_rules",
+      "description": "Report SDN ACL rules.",
+      "source": "accessControlLists",
+      "fields": [
+        [
+          "resourceId",
+          "resourceId"
+        ],
+        [
+          "provisioningState",
+          "properties.provisioningState"
+        ],
+        [
+          "parentId",
+          "parentId"
+        ],
+        [
+          "action",
+          "properties.action"
+        ],
+        [
+          "priority",
+          "properties.priority"
+        ],
+        [
+          "direction",
+          "properties.type"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-ncnbi/6dbabf43-0fcd-439c-81e2-7eb794f7c140",
+      "child": "aclRules"
+    },
+    {
+      "id": "acl_allow_rules",
+      "description": "Report SDN ACL rules that allow traffic.",
+      "source": "accessControlLists",
+      "fields": [
+        [
+          "resourceId",
+          "resourceId"
+        ],
+        [
+          "provisioningState",
+          "properties.provisioningState"
+        ],
+        [
+          "parentId",
+          "parentId"
+        ],
+        [
+          "priority",
+          "properties.priority"
+        ],
+        [
+          "protocol",
+          "properties.protocol"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-ncnbi/6dbabf43-0fcd-439c-81e2-7eb794f7c140",
+      "child": "aclRules",
+      "filter": {
+        "path": "properties.action",
+        "op": "eq",
+        "value": "Allow"
+      }
+    },
+    {
+      "id": "acl_deny_rules",
+      "description": "Report SDN ACL rules that deny traffic.",
+      "source": "accessControlLists",
+      "fields": [
+        [
+          "resourceId",
+          "resourceId"
+        ],
+        [
+          "provisioningState",
+          "properties.provisioningState"
+        ],
+        [
+          "parentId",
+          "parentId"
+        ],
+        [
+          "priority",
+          "properties.priority"
+        ],
+        [
+          "protocol",
+          "properties.protocol"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-ncnbi/6dbabf43-0fcd-439c-81e2-7eb794f7c140",
+      "child": "aclRules",
+      "filter": {
+        "path": "properties.action",
+        "op": "eq",
+        "value": "Deny"
+      }
+    },
+    {
+      "id": "route_tables",
+      "description": "Inventory tenant route tables.",
+      "source": "routeTables",
+      "fields": [
+        [
+          "resourceId",
+          "resourceId"
+        ],
+        [
+          "provisioningState",
+          "properties.provisioningState"
+        ],
+        [
+          "routes",
+          "properties.routes"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-ncnbi/6dbabf43-0fcd-439c-81e2-7eb794f7c140"
+    },
+    {
+      "id": "routes",
+      "description": "Report tenant route prefixes and next hops.",
+      "source": "routeTables",
+      "fields": [
+        [
+          "resourceId",
+          "resourceId"
+        ],
+        [
+          "provisioningState",
+          "properties.provisioningState"
+        ],
+        [
+          "parentId",
+          "parentId"
+        ],
+        [
+          "addressPrefix",
+          "properties.addressPrefix"
+        ],
+        [
+          "nextHopType",
+          "properties.nextHopType"
+        ],
+        [
+          "nextHopIpAddress",
+          "properties.nextHopIpAddress"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-ncnbi/6dbabf43-0fcd-439c-81e2-7eb794f7c140",
+      "child": "routes"
+    },
+    {
+      "id": "load_balancers",
+      "description": "Inventory SDN load balancers.",
+      "source": "loadBalancers",
+      "fields": [
+        [
+          "resourceId",
+          "resourceId"
+        ],
+        [
+          "provisioningState",
+          "properties.provisioningState"
+        ],
+        [
+          "frontends",
+          "properties.frontendIPConfigurations"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-ncnbi/6dbabf43-0fcd-439c-81e2-7eb794f7c140"
+    },
+    {
+      "id": "lb_frontends",
+      "description": "Report load balancer frontend IP configurations.",
+      "source": "loadBalancers",
+      "fields": [
+        [
+          "resourceId",
+          "resourceId"
+        ],
+        [
+          "provisioningState",
+          "properties.provisioningState"
+        ],
+        [
+          "parentId",
+          "parentId"
+        ],
+        [
+          "privateIPAddress",
+          "properties.privateIPAddress"
+        ],
+        [
+          "publicIPAddress",
+          "properties.publicIPAddress"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-ncnbi/6dbabf43-0fcd-439c-81e2-7eb794f7c140",
+      "child": "frontendIPConfigurations"
+    },
+    {
+      "id": "lb_backends",
+      "description": "Report load balancer backend address pools.",
+      "source": "loadBalancers",
+      "fields": [
+        [
+          "resourceId",
+          "resourceId"
+        ],
+        [
+          "provisioningState",
+          "properties.provisioningState"
+        ],
+        [
+          "parentId",
+          "parentId"
+        ],
+        [
+          "backendIPConfigurations",
+          "properties.backendIPConfigurations"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-ncnbi/6dbabf43-0fcd-439c-81e2-7eb794f7c140",
+      "child": "backendAddressPools"
+    },
+    {
+      "id": "lb_probes",
+      "description": "Report load balancer health probe settings.",
+      "source": "loadBalancers",
+      "fields": [
+        [
+          "resourceId",
+          "resourceId"
+        ],
+        [
+          "provisioningState",
+          "properties.provisioningState"
+        ],
+        [
+          "parentId",
+          "parentId"
+        ],
+        [
+          "protocol",
+          "properties.protocol"
+        ],
+        [
+          "port",
+          "properties.port"
+        ],
+        [
+          "intervalSeconds",
+          "properties.intervalInSeconds"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-ncnbi/6dbabf43-0fcd-439c-81e2-7eb794f7c140",
+      "child": "probes"
+    },
+    {
+      "id": "lb_rules",
+      "description": "Report load balancing rules and port mappings.",
+      "source": "loadBalancers",
+      "fields": [
+        [
+          "resourceId",
+          "resourceId"
+        ],
+        [
+          "provisioningState",
+          "properties.provisioningState"
+        ],
+        [
+          "parentId",
+          "parentId"
+        ],
+        [
+          "protocol",
+          "properties.protocol"
+        ],
+        [
+          "frontendPort",
+          "properties.frontendPort"
+        ],
+        [
+          "backendPort",
+          "properties.backendPort"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-ncnbi/6dbabf43-0fcd-439c-81e2-7eb794f7c140",
+      "child": "loadBalancingRules"
+    },
+    {
+      "id": "lb_inbound_nat",
+      "description": "Report load balancer inbound NAT rules.",
+      "source": "loadBalancers",
+      "fields": [
+        [
+          "resourceId",
+          "resourceId"
+        ],
+        [
+          "provisioningState",
+          "properties.provisioningState"
+        ],
+        [
+          "parentId",
+          "parentId"
+        ],
+        [
+          "frontendPort",
+          "properties.frontendPort"
+        ],
+        [
+          "backendPort",
+          "properties.backendPort"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-ncnbi/6dbabf43-0fcd-439c-81e2-7eb794f7c140",
+      "child": "inboundNatRules"
+    },
+    {
+      "id": "lb_outbound_nat",
+      "description": "Report load balancer outbound NAT rules.",
+      "source": "loadBalancers",
+      "fields": [
+        [
+          "resourceId",
+          "resourceId"
+        ],
+        [
+          "provisioningState",
+          "properties.provisioningState"
+        ],
+        [
+          "parentId",
+          "parentId"
+        ],
+        [
+          "backendAddressPool",
+          "properties.backendAddressPool"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-ncnbi/6dbabf43-0fcd-439c-81e2-7eb794f7c140",
+      "child": "outboundNatRules"
+    },
+    {
+      "id": "public_ips",
+      "description": "Inventory Network Controller public IP resources.",
+      "source": "publicIPAddresses",
+      "fields": [
+        [
+          "resourceId",
+          "resourceId"
+        ],
+        [
+          "provisioningState",
+          "properties.provisioningState"
+        ],
+        [
+          "ipAddress",
+          "properties.ipAddress"
+        ],
+        [
+          "ipConfiguration",
+          "properties.ipConfiguration"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-ncnbi/6dbabf43-0fcd-439c-81e2-7eb794f7c140"
+    },
+    {
+      "id": "gateways",
+      "description": "Inventory SDN gateway virtual machines.",
+      "source": "gateways",
+      "fields": [
+        [
+          "resourceId",
+          "resourceId"
+        ],
+        [
+          "provisioningState",
+          "properties.provisioningState"
+        ],
+        [
+          "gatewayPools",
+          "properties.gatewayPools"
+        ],
+        [
+          "virtualServer",
+          "properties.virtualServer"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-ncnbi/6dbabf43-0fcd-439c-81e2-7eb794f7c140"
+    },
+    {
+      "id": "gateway_pools",
+      "description": "Inventory gateway pools and capacity.",
+      "source": "GatewayPools",
+      "fields": [
+        [
+          "resourceId",
+          "resourceId"
+        ],
+        [
+          "provisioningState",
+          "properties.provisioningState"
+        ],
+        [
+          "capacity",
+          "properties.capacity"
+        ],
+        [
+          "gateways",
+          "properties.gateways"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-ncnbi/6dbabf43-0fcd-439c-81e2-7eb794f7c140"
+    },
+    {
+      "id": "virtual_gateways",
+      "description": "Inventory tenant virtual gateways.",
+      "source": "VirtualGateways",
+      "fields": [
+        [
+          "resourceId",
+          "resourceId"
+        ],
+        [
+          "provisioningState",
+          "properties.provisioningState"
+        ],
+        [
+          "gatewayPool",
+          "properties.gatewayPool"
+        ],
+        [
+          "bgpRouters",
+          "properties.bgpRouters"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-ncnbi/6dbabf43-0fcd-439c-81e2-7eb794f7c140"
+    },
+    {
+      "id": "gateway_connections",
+      "description": "Report tenant virtual gateway network connections.",
+      "source": "VirtualGateways",
+      "fields": [
+        [
+          "resourceId",
+          "resourceId"
+        ],
+        [
+          "provisioningState",
+          "properties.provisioningState"
+        ],
+        [
+          "parentId",
+          "parentId"
+        ],
+        [
+          "connectionType",
+          "properties.connectionType"
+        ],
+        [
+          "outboundKbps",
+          "properties.outboundKiloBitsPerSecond"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-ncnbi/6dbabf43-0fcd-439c-81e2-7eb794f7c140",
+      "child": "networkConnections"
+    },
+    {
+      "id": "servers",
+      "description": "Inventory Network Controller managed servers.",
+      "source": "servers",
+      "fields": [
+        [
+          "resourceId",
+          "resourceId"
+        ],
+        [
+          "provisioningState",
+          "properties.provisioningState"
+        ],
+        [
+          "managementAddresses",
+          "properties.managementAddresses"
+        ],
+        [
+          "networkInterfaces",
+          "properties.networkInterfaces"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-ncnbi/6dbabf43-0fcd-439c-81e2-7eb794f7c140"
+    }
+  ]
+}

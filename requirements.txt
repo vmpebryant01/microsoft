@@ -1,0 +1,4 @@
+# Author: Paul Bryant
+azure-identity>=1.20,<2
+requests>=2.32,<3
+requests-kerberos==0.15.0

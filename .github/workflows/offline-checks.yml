@@ -1,0 +1,20 @@
+# Author: Paul Bryant
+name: Offline report checks
+
+on: [push, pull_request]
+
+permissions:
+  contents: read
+
+jobs:
+  reports:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compile Python reports
+        run: python -m compileall -q .
+      - name: Test Python reports
+        run: python -m unittest discover -s tests -v
+      - name: Test PowerShell reports
+        shell: pwsh
+        run: ./tests/Test-Reports.ps1

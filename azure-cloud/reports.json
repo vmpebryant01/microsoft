@@ -1,0 +1,930 @@
+{
+  "author": "Paul Bryant",
+  "category": "azure-cloud",
+  "source": "arg",
+  "reports": [
+    {
+      "id": "vm_inventory",
+      "description": "Inventory virtual machines and their hardware size.",
+      "source_type": "microsoft.compute/virtualmachines",
+      "fields": [
+        [
+          "id",
+          "id"
+        ],
+        [
+          "name",
+          "name"
+        ],
+        [
+          "resourceGroup",
+          "resourceGroup"
+        ],
+        [
+          "subscriptionId",
+          "subscriptionId"
+        ],
+        [
+          "location",
+          "location"
+        ],
+        [
+          "vmSize",
+          "properties.hardwareProfile.vmSize"
+        ],
+        [
+          "provisioningState",
+          "properties.provisioningState"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/rest/api/azureresourcegraph/resourcegraph/resources/resources"
+    },
+    {
+      "id": "vm_images",
+      "description": "Report VM image references and operating system types.",
+      "source_type": "microsoft.compute/virtualmachines",
+      "fields": [
+        [
+          "id",
+          "id"
+        ],
+        [
+          "name",
+          "name"
+        ],
+        [
+          "resourceGroup",
+          "resourceGroup"
+        ],
+        [
+          "subscriptionId",
+          "subscriptionId"
+        ],
+        [
+          "osType",
+          "properties.storageProfile.osDisk.osType"
+        ],
+        [
+          "publisher",
+          "properties.storageProfile.imageReference.publisher"
+        ],
+        [
+          "offer",
+          "properties.storageProfile.imageReference.offer"
+        ],
+        [
+          "sku",
+          "properties.storageProfile.imageReference.sku"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/rest/api/azureresourcegraph/resourcegraph/resources/resources"
+    },
+    {
+      "id": "vm_os_disks",
+      "description": "Report operating system disks attached to VMs.",
+      "source_type": "microsoft.compute/virtualmachines",
+      "fields": [
+        [
+          "id",
+          "id"
+        ],
+        [
+          "name",
+          "name"
+        ],
+        [
+          "resourceGroup",
+          "resourceGroup"
+        ],
+        [
+          "subscriptionId",
+          "subscriptionId"
+        ],
+        [
+          "diskName",
+          "properties.storageProfile.osDisk.name"
+        ],
+        [
+          "managedDiskId",
+          "properties.storageProfile.osDisk.managedDisk.id"
+        ],
+        [
+          "caching",
+          "properties.storageProfile.osDisk.caching"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/rest/api/azureresourcegraph/resourcegraph/resources/resources"
+    },
+    {
+      "id": "vm_data_disks",
+      "description": "Report every VM data disk reference.",
+      "source_type": "microsoft.compute/virtualmachines",
+      "fields": [
+        [
+          "id",
+          "id"
+        ],
+        [
+          "name",
+          "name"
+        ],
+        [
+          "resourceGroup",
+          "resourceGroup"
+        ],
+        [
+          "subscriptionId",
+          "subscriptionId"
+        ],
+        [
+          "lun",
+          "item.lun"
+        ],
+        [
+          "diskName",
+          "item.name"
+        ],
+        [
+          "managedDiskId",
+          "item.managedDisk.id"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/rest/api/azureresourcegraph/resourcegraph/resources/resources",
+      "expand": "properties.storageProfile.dataDisks"
+    },
+    {
+      "id": "vm_network_interfaces",
+      "description": "Report VM network interface references.",
+      "source_type": "microsoft.compute/virtualmachines",
+      "fields": [
+        [
+          "id",
+          "id"
+        ],
+        [
+          "name",
+          "name"
+        ],
+        [
+          "resourceGroup",
+          "resourceGroup"
+        ],
+        [
+          "subscriptionId",
+          "subscriptionId"
+        ],
+        [
+          "nicId",
+          "item.id"
+        ],
+        [
+          "primary",
+          "item.properties.primary"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/rest/api/azureresourcegraph/resourcegraph/resources/resources",
+      "expand": "properties.networkProfile.networkInterfaces"
+    },
+    {
+      "id": "managed_disks",
+      "description": "Inventory managed disks and their sizes.",
+      "source_type": "microsoft.compute/disks",
+      "fields": [
+        [
+          "id",
+          "id"
+        ],
+        [
+          "name",
+          "name"
+        ],
+        [
+          "resourceGroup",
+          "resourceGroup"
+        ],
+        [
+          "subscriptionId",
+          "subscriptionId"
+        ],
+        [
+          "location",
+          "location"
+        ],
+        [
+          "diskSizeGB",
+          "properties.diskSizeGB"
+        ],
+        [
+          "diskState",
+          "properties.diskState"
+        ],
+        [
+          "sku",
+          "sku.name"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/rest/api/azureresourcegraph/resourcegraph/resources/resources"
+    },
+    {
+      "id": "unattached_disks",
+      "description": "Find managed disks reported as unattached.",
+      "source_type": "microsoft.compute/disks",
+      "fields": [
+        [
+          "id",
+          "id"
+        ],
+        [
+          "name",
+          "name"
+        ],
+        [
+          "resourceGroup",
+          "resourceGroup"
+        ],
+        [
+          "subscriptionId",
+          "subscriptionId"
+        ],
+        [
+          "diskSizeGB",
+          "properties.diskSizeGB"
+        ],
+        [
+          "sku",
+          "sku.name"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/rest/api/azureresourcegraph/resourcegraph/resources/resources",
+      "filter": {
+        "path": "properties.diskState",
+        "op": "eq",
+        "value": "Unattached"
+      }
+    },
+    {
+      "id": "disk_encryption",
+      "description": "Report managed disk encryption settings.",
+      "source_type": "microsoft.compute/disks",
+      "fields": [
+        [
+          "id",
+          "id"
+        ],
+        [
+          "name",
+          "name"
+        ],
+        [
+          "resourceGroup",
+          "resourceGroup"
+        ],
+        [
+          "subscriptionId",
+          "subscriptionId"
+        ],
+        [
+          "encryptionType",
+          "properties.encryption.type"
+        ],
+        [
+          "diskEncryptionSetId",
+          "properties.encryption.diskEncryptionSetId"
+        ],
+        [
+          "securityType",
+          "properties.securityProfile.securityType"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/rest/api/azureresourcegraph/resourcegraph/resources/resources"
+    },
+    {
+      "id": "snapshots",
+      "description": "Inventory managed disk snapshots.",
+      "source_type": "microsoft.compute/snapshots",
+      "fields": [
+        [
+          "id",
+          "id"
+        ],
+        [
+          "name",
+          "name"
+        ],
+        [
+          "resourceGroup",
+          "resourceGroup"
+        ],
+        [
+          "subscriptionId",
+          "subscriptionId"
+        ],
+        [
+          "location",
+          "location"
+        ],
+        [
+          "diskSizeGB",
+          "properties.diskSizeGB"
+        ],
+        [
+          "sourceId",
+          "properties.creationData.sourceResourceId"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/rest/api/azureresourcegraph/resourcegraph/resources/resources"
+    },
+    {
+      "id": "vm_scale_sets",
+      "description": "Inventory virtual machine scale sets and planned capacity.",
+      "source_type": "microsoft.compute/virtualmachinescalesets",
+      "fields": [
+        [
+          "id",
+          "id"
+        ],
+        [
+          "name",
+          "name"
+        ],
+        [
+          "resourceGroup",
+          "resourceGroup"
+        ],
+        [
+          "subscriptionId",
+          "subscriptionId"
+        ],
+        [
+          "location",
+          "location"
+        ],
+        [
+          "capacity",
+          "sku.capacity"
+        ],
+        [
+          "vmSize",
+          "sku.name"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/rest/api/azureresourcegraph/resourcegraph/resources/resources"
+    },
+    {
+      "id": "availability_sets",
+      "description": "Inventory availability sets and fault domain settings.",
+      "source_type": "microsoft.compute/availabilitysets",
+      "fields": [
+        [
+          "id",
+          "id"
+        ],
+        [
+          "name",
+          "name"
+        ],
+        [
+          "resourceGroup",
+          "resourceGroup"
+        ],
+        [
+          "subscriptionId",
+          "subscriptionId"
+        ],
+        [
+          "faultDomains",
+          "properties.platformFaultDomainCount"
+        ],
+        [
+          "updateDomains",
+          "properties.platformUpdateDomainCount"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/rest/api/azureresourcegraph/resourcegraph/resources/resources"
+    },
+    {
+      "id": "virtual_networks",
+      "description": "Inventory Azure virtual networks and address spaces.",
+      "source_type": "microsoft.network/virtualnetworks",
+      "fields": [
+        [
+          "id",
+          "id"
+        ],
+        [
+          "name",
+          "name"
+        ],
+        [
+          "resourceGroup",
+          "resourceGroup"
+        ],
+        [
+          "subscriptionId",
+          "subscriptionId"
+        ],
+        [
+          "location",
+          "location"
+        ],
+        [
+          "addressPrefixes",
+          "properties.addressSpace.addressPrefixes"
+        ],
+        [
+          "provisioningState",
+          "properties.provisioningState"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/rest/api/azureresourcegraph/resourcegraph/resources/resources"
+    },
+    {
+      "id": "subnets",
+      "description": "Report embedded subnet definitions in virtual networks.",
+      "source_type": "microsoft.network/virtualnetworks",
+      "fields": [
+        [
+          "id",
+          "id"
+        ],
+        [
+          "name",
+          "name"
+        ],
+        [
+          "resourceGroup",
+          "resourceGroup"
+        ],
+        [
+          "subscriptionId",
+          "subscriptionId"
+        ],
+        [
+          "subnetName",
+          "item.name"
+        ],
+        [
+          "addressPrefix",
+          "item.properties.addressPrefix"
+        ],
+        [
+          "addressPrefixes",
+          "item.properties.addressPrefixes"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/rest/api/azureresourcegraph/resourcegraph/resources/resources",
+      "expand": "properties.subnets"
+    },
+    {
+      "id": "vnet_peerings",
+      "description": "Report virtual network peering relationships.",
+      "source_type": "microsoft.network/virtualnetworks",
+      "fields": [
+        [
+          "id",
+          "id"
+        ],
+        [
+          "name",
+          "name"
+        ],
+        [
+          "resourceGroup",
+          "resourceGroup"
+        ],
+        [
+          "subscriptionId",
+          "subscriptionId"
+        ],
+        [
+          "peeringName",
+          "item.name"
+        ],
+        [
+          "remoteVnet",
+          "item.properties.remoteVirtualNetwork.id"
+        ],
+        [
+          "peeringState",
+          "item.properties.peeringState"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/rest/api/azureresourcegraph/resourcegraph/resources/resources",
+      "expand": "properties.virtualNetworkPeerings"
+    },
+    {
+      "id": "network_security_groups",
+      "description": "Inventory Azure network security groups.",
+      "source_type": "microsoft.network/networksecuritygroups",
+      "fields": [
+        [
+          "id",
+          "id"
+        ],
+        [
+          "name",
+          "name"
+        ],
+        [
+          "resourceGroup",
+          "resourceGroup"
+        ],
+        [
+          "subscriptionId",
+          "subscriptionId"
+        ],
+        [
+          "location",
+          "location"
+        ],
+        [
+          "provisioningState",
+          "properties.provisioningState"
+        ],
+        [
+          "nicReferences",
+          "properties.networkInterfaces"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/rest/api/azureresourcegraph/resourcegraph/resources/resources"
+    },
+    {
+      "id": "nsg_rules",
+      "description": "Report custom Azure network security rules.",
+      "source_type": "microsoft.network/networksecuritygroups",
+      "fields": [
+        [
+          "id",
+          "id"
+        ],
+        [
+          "name",
+          "name"
+        ],
+        [
+          "resourceGroup",
+          "resourceGroup"
+        ],
+        [
+          "subscriptionId",
+          "subscriptionId"
+        ],
+        [
+          "ruleName",
+          "item.name"
+        ],
+        [
+          "direction",
+          "item.properties.direction"
+        ],
+        [
+          "access",
+          "item.properties.access"
+        ],
+        [
+          "priority",
+          "item.properties.priority"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/rest/api/azureresourcegraph/resourcegraph/resources/resources",
+      "expand": "properties.securityRules"
+    },
+    {
+      "id": "route_tables",
+      "description": "Inventory route tables and BGP propagation settings.",
+      "source_type": "microsoft.network/routetables",
+      "fields": [
+        [
+          "id",
+          "id"
+        ],
+        [
+          "name",
+          "name"
+        ],
+        [
+          "resourceGroup",
+          "resourceGroup"
+        ],
+        [
+          "subscriptionId",
+          "subscriptionId"
+        ],
+        [
+          "location",
+          "location"
+        ],
+        [
+          "disableBgpPropagation",
+          "properties.disableBgpRoutePropagation"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/rest/api/azureresourcegraph/resourcegraph/resources/resources"
+    },
+    {
+      "id": "routes",
+      "description": "Report routes embedded in Azure route tables.",
+      "source_type": "microsoft.network/routetables",
+      "fields": [
+        [
+          "id",
+          "id"
+        ],
+        [
+          "name",
+          "name"
+        ],
+        [
+          "resourceGroup",
+          "resourceGroup"
+        ],
+        [
+          "subscriptionId",
+          "subscriptionId"
+        ],
+        [
+          "routeName",
+          "item.name"
+        ],
+        [
+          "addressPrefix",
+          "item.properties.addressPrefix"
+        ],
+        [
+          "nextHopType",
+          "item.properties.nextHopType"
+        ],
+        [
+          "nextHopIpAddress",
+          "item.properties.nextHopIpAddress"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/rest/api/azureresourcegraph/resourcegraph/resources/resources",
+      "expand": "properties.routes"
+    },
+    {
+      "id": "public_ips",
+      "description": "Inventory Azure public IP addresses.",
+      "source_type": "microsoft.network/publicipaddresses",
+      "fields": [
+        [
+          "id",
+          "id"
+        ],
+        [
+          "name",
+          "name"
+        ],
+        [
+          "resourceGroup",
+          "resourceGroup"
+        ],
+        [
+          "subscriptionId",
+          "subscriptionId"
+        ],
+        [
+          "location",
+          "location"
+        ],
+        [
+          "ipAddress",
+          "properties.ipAddress"
+        ],
+        [
+          "allocationMethod",
+          "properties.publicIPAllocationMethod"
+        ],
+        [
+          "sku",
+          "sku.name"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/rest/api/azureresourcegraph/resourcegraph/resources/resources"
+    },
+    {
+      "id": "load_balancers",
+      "description": "Inventory Azure load balancers and SKU.",
+      "source_type": "microsoft.network/loadbalancers",
+      "fields": [
+        [
+          "id",
+          "id"
+        ],
+        [
+          "name",
+          "name"
+        ],
+        [
+          "resourceGroup",
+          "resourceGroup"
+        ],
+        [
+          "subscriptionId",
+          "subscriptionId"
+        ],
+        [
+          "location",
+          "location"
+        ],
+        [
+          "sku",
+          "sku.name"
+        ],
+        [
+          "frontendConfigurations",
+          "properties.frontendIPConfigurations"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/rest/api/azureresourcegraph/resourcegraph/resources/resources"
+    },
+    {
+      "id": "storage_accounts",
+      "description": "Inventory Azure storage accounts and network defaults.",
+      "source_type": "microsoft.storage/storageaccounts",
+      "fields": [
+        [
+          "id",
+          "id"
+        ],
+        [
+          "name",
+          "name"
+        ],
+        [
+          "resourceGroup",
+          "resourceGroup"
+        ],
+        [
+          "subscriptionId",
+          "subscriptionId"
+        ],
+        [
+          "location",
+          "location"
+        ],
+        [
+          "sku",
+          "sku.name"
+        ],
+        [
+          "kind",
+          "kind"
+        ],
+        [
+          "defaultAction",
+          "properties.networkAcls.defaultAction"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/rest/api/azureresourcegraph/resourcegraph/resources/resources"
+    },
+    {
+      "id": "key_vaults",
+      "description": "Inventory Key Vault resources and access model.",
+      "source_type": "microsoft.keyvault/vaults",
+      "fields": [
+        [
+          "id",
+          "id"
+        ],
+        [
+          "name",
+          "name"
+        ],
+        [
+          "resourceGroup",
+          "resourceGroup"
+        ],
+        [
+          "subscriptionId",
+          "subscriptionId"
+        ],
+        [
+          "location",
+          "location"
+        ],
+        [
+          "enableRbacAuthorization",
+          "properties.enableRbacAuthorization"
+        ],
+        [
+          "publicNetworkAccess",
+          "properties.publicNetworkAccess"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/rest/api/azureresourcegraph/resourcegraph/resources/resources"
+    },
+    {
+      "id": "sql_servers",
+      "description": "Inventory Azure SQL logical servers.",
+      "source_type": "microsoft.sql/servers",
+      "fields": [
+        [
+          "id",
+          "id"
+        ],
+        [
+          "name",
+          "name"
+        ],
+        [
+          "resourceGroup",
+          "resourceGroup"
+        ],
+        [
+          "subscriptionId",
+          "subscriptionId"
+        ],
+        [
+          "location",
+          "location"
+        ],
+        [
+          "version",
+          "properties.version"
+        ],
+        [
+          "administratorLogin",
+          "properties.administratorLogin"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/rest/api/azureresourcegraph/resourcegraph/resources/resources"
+    },
+    {
+      "id": "sql_databases",
+      "description": "Inventory Azure SQL databases and service tiers.",
+      "source_type": "microsoft.sql/servers/databases",
+      "fields": [
+        [
+          "id",
+          "id"
+        ],
+        [
+          "name",
+          "name"
+        ],
+        [
+          "resourceGroup",
+          "resourceGroup"
+        ],
+        [
+          "subscriptionId",
+          "subscriptionId"
+        ],
+        [
+          "location",
+          "location"
+        ],
+        [
+          "status",
+          "properties.status"
+        ],
+        [
+          "sku",
+          "sku.name"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/rest/api/azureresourcegraph/resourcegraph/resources/resources"
+    },
+    {
+      "id": "app_services",
+      "description": "Inventory App Service applications and runtime state.",
+      "source_type": "microsoft.web/sites",
+      "fields": [
+        [
+          "id",
+          "id"
+        ],
+        [
+          "name",
+          "name"
+        ],
+        [
+          "resourceGroup",
+          "resourceGroup"
+        ],
+        [
+          "subscriptionId",
+          "subscriptionId"
+        ],
+        [
+          "location",
+          "location"
+        ],
+        [
+          "state",
+          "properties.state"
+        ],
+        [
+          "kind",
+          "kind"
+        ],
+        [
+          "httpsOnly",
+          "properties.httpsOnly"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/rest/api/azureresourcegraph/resourcegraph/resources/resources"
+    }
+  ]
+}

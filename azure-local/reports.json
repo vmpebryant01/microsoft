@@ -1,0 +1,822 @@
+{
+  "author": "Paul Bryant",
+  "category": "azure-local",
+  "source": "arg",
+  "reports": [
+    {
+      "id": "clusters",
+      "description": "Inventory Azure Local cluster resources.",
+      "source_type": "microsoft.azurestackhci/clusters",
+      "fields": [
+        [
+          "id",
+          "id"
+        ],
+        [
+          "name",
+          "name"
+        ],
+        [
+          "resourceGroup",
+          "resourceGroup"
+        ],
+        [
+          "subscriptionId",
+          "subscriptionId"
+        ],
+        [
+          "location",
+          "location"
+        ],
+        [
+          "provisioningState",
+          "properties.provisioningState"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/allversions"
+    },
+    {
+      "id": "cluster_versions",
+      "description": "Report Azure Local cluster software and hardware versions.",
+      "source_type": "microsoft.azurestackhci/clusters",
+      "fields": [
+        [
+          "id",
+          "id"
+        ],
+        [
+          "name",
+          "name"
+        ],
+        [
+          "resourceGroup",
+          "resourceGroup"
+        ],
+        [
+          "subscriptionId",
+          "subscriptionId"
+        ],
+        [
+          "clusterVersion",
+          "properties.reportedProperties.clusterVersion"
+        ],
+        [
+          "nodeType",
+          "properties.reportedProperties.clusterType"
+        ],
+        [
+          "cloudId",
+          "properties.cloudId"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/rest/api/stackhci/clusters/get?view=rest-stackhci-2024-04-01"
+    },
+    {
+      "id": "cluster_connectivity",
+      "description": "Report registration and connectivity fields for clusters.",
+      "source_type": "microsoft.azurestackhci/clusters",
+      "fields": [
+        [
+          "id",
+          "id"
+        ],
+        [
+          "name",
+          "name"
+        ],
+        [
+          "resourceGroup",
+          "resourceGroup"
+        ],
+        [
+          "subscriptionId",
+          "subscriptionId"
+        ],
+        [
+          "registrationTimestamp",
+          "properties.registrationTimestamp"
+        ],
+        [
+          "connectivityStatus",
+          "properties.connectivityStatus"
+        ],
+        [
+          "lastSyncTimestamp",
+          "properties.lastSyncTimestamp"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/rest/api/stackhci/clusters/get?view=rest-stackhci-2024-04-01"
+    },
+    {
+      "id": "cluster_tags",
+      "description": "Report tags applied to Azure Local clusters.",
+      "source_type": "microsoft.azurestackhci/clusters",
+      "fields": [
+        [
+          "id",
+          "id"
+        ],
+        [
+          "name",
+          "name"
+        ],
+        [
+          "resourceGroup",
+          "resourceGroup"
+        ],
+        [
+          "subscriptionId",
+          "subscriptionId"
+        ],
+        [
+          "tags",
+          "tags"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/allversions"
+    },
+    {
+      "id": "cluster_nodes",
+      "description": "Report node entries exposed by cluster resources.",
+      "source_type": "microsoft.azurestackhci/clusters",
+      "fields": [
+        [
+          "id",
+          "id"
+        ],
+        [
+          "name",
+          "name"
+        ],
+        [
+          "resourceGroup",
+          "resourceGroup"
+        ],
+        [
+          "subscriptionId",
+          "subscriptionId"
+        ],
+        [
+          "node",
+          "item"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/rest/api/stackhci/clusters/get?view=rest-stackhci-2024-04-01",
+      "expand": "properties.reportedProperties.nodes"
+    },
+    {
+      "id": "arc_settings",
+      "description": "Inventory cluster Arc settings.",
+      "source_type": "microsoft.azurestackhci/clusters/arcsettings",
+      "fields": [
+        [
+          "id",
+          "id"
+        ],
+        [
+          "name",
+          "name"
+        ],
+        [
+          "resourceGroup",
+          "resourceGroup"
+        ],
+        [
+          "subscriptionId",
+          "subscriptionId"
+        ],
+        [
+          "provisioningState",
+          "properties.provisioningState"
+        ],
+        [
+          "arcInstanceResourceGroup",
+          "properties.arcInstanceResourceGroup"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/allversions"
+    },
+    {
+      "id": "arc_extensions",
+      "description": "Inventory Azure Local Arc extensions.",
+      "source_type": "microsoft.azurestackhci/clusters/arcsettings/extensions",
+      "fields": [
+        [
+          "id",
+          "id"
+        ],
+        [
+          "name",
+          "name"
+        ],
+        [
+          "resourceGroup",
+          "resourceGroup"
+        ],
+        [
+          "subscriptionId",
+          "subscriptionId"
+        ],
+        [
+          "publisher",
+          "properties.publisher"
+        ],
+        [
+          "type",
+          "properties.type"
+        ],
+        [
+          "typeHandlerVersion",
+          "properties.typeHandlerVersion"
+        ],
+        [
+          "provisioningState",
+          "properties.provisioningState"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/allversions"
+    },
+    {
+      "id": "deployment_settings",
+      "description": "Inventory Azure Local deployment settings resources.",
+      "source_type": "microsoft.azurestackhci/clusters/deploymentsettings",
+      "fields": [
+        [
+          "id",
+          "id"
+        ],
+        [
+          "name",
+          "name"
+        ],
+        [
+          "resourceGroup",
+          "resourceGroup"
+        ],
+        [
+          "subscriptionId",
+          "subscriptionId"
+        ],
+        [
+          "provisioningState",
+          "properties.provisioningState"
+        ],
+        [
+          "deploymentMode",
+          "properties.deploymentMode"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/allversions"
+    },
+    {
+      "id": "security_settings",
+      "description": "Report cluster security settings resources.",
+      "source_type": "microsoft.azurestackhci/clusters/securitysettings",
+      "fields": [
+        [
+          "id",
+          "id"
+        ],
+        [
+          "name",
+          "name"
+        ],
+        [
+          "resourceGroup",
+          "resourceGroup"
+        ],
+        [
+          "subscriptionId",
+          "subscriptionId"
+        ],
+        [
+          "provisioningState",
+          "properties.provisioningState"
+        ],
+        [
+          "securityComplianceStatus",
+          "properties.securityComplianceStatus"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/allversions"
+    },
+    {
+      "id": "update_summaries",
+      "description": "Report cluster update summaries.",
+      "source_type": "microsoft.azurestackhci/clusters/updatesummaries",
+      "fields": [
+        [
+          "id",
+          "id"
+        ],
+        [
+          "name",
+          "name"
+        ],
+        [
+          "resourceGroup",
+          "resourceGroup"
+        ],
+        [
+          "subscriptionId",
+          "subscriptionId"
+        ],
+        [
+          "state",
+          "properties.state"
+        ],
+        [
+          "lastUpdated",
+          "properties.lastUpdated"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/allversions"
+    },
+    {
+      "id": "available_updates",
+      "description": "Inventory available cluster updates.",
+      "source_type": "microsoft.azurestackhci/clusters/updates",
+      "fields": [
+        [
+          "id",
+          "id"
+        ],
+        [
+          "name",
+          "name"
+        ],
+        [
+          "resourceGroup",
+          "resourceGroup"
+        ],
+        [
+          "subscriptionId",
+          "subscriptionId"
+        ],
+        [
+          "state",
+          "properties.state"
+        ],
+        [
+          "version",
+          "properties.version"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/allversions"
+    },
+    {
+      "id": "update_runs",
+      "description": "Report Azure Local cluster update runs.",
+      "source_type": "microsoft.azurestackhci/clusters/updates/updateruns",
+      "fields": [
+        [
+          "id",
+          "id"
+        ],
+        [
+          "name",
+          "name"
+        ],
+        [
+          "resourceGroup",
+          "resourceGroup"
+        ],
+        [
+          "subscriptionId",
+          "subscriptionId"
+        ],
+        [
+          "state",
+          "properties.state"
+        ],
+        [
+          "startTimeUtc",
+          "properties.startTimeUtc"
+        ],
+        [
+          "endTimeUtc",
+          "properties.endTimeUtc"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/allversions"
+    },
+    {
+      "id": "edge_devices",
+      "description": "Inventory registered Azure Local edge devices.",
+      "source_type": "microsoft.azurestackhci/edgedevices",
+      "fields": [
+        [
+          "id",
+          "id"
+        ],
+        [
+          "name",
+          "name"
+        ],
+        [
+          "resourceGroup",
+          "resourceGroup"
+        ],
+        [
+          "subscriptionId",
+          "subscriptionId"
+        ],
+        [
+          "provisioningState",
+          "properties.provisioningState"
+        ],
+        [
+          "deviceType",
+          "properties.deviceType"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/allversions"
+    },
+    {
+      "id": "gallery_images",
+      "description": "Inventory Azure Local gallery images.",
+      "source_type": "microsoft.azurestackhci/galleryimages",
+      "fields": [
+        [
+          "id",
+          "id"
+        ],
+        [
+          "name",
+          "name"
+        ],
+        [
+          "resourceGroup",
+          "resourceGroup"
+        ],
+        [
+          "subscriptionId",
+          "subscriptionId"
+        ],
+        [
+          "location",
+          "location"
+        ],
+        [
+          "osType",
+          "properties.osType"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/allversions"
+    },
+    {
+      "id": "marketplace_images",
+      "description": "Inventory Azure Local marketplace gallery images.",
+      "source_type": "microsoft.azurestackhci/marketplacegalleryimages",
+      "fields": [
+        [
+          "id",
+          "id"
+        ],
+        [
+          "name",
+          "name"
+        ],
+        [
+          "resourceGroup",
+          "resourceGroup"
+        ],
+        [
+          "subscriptionId",
+          "subscriptionId"
+        ],
+        [
+          "location",
+          "location"
+        ],
+        [
+          "osType",
+          "properties.osType"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/allversions"
+    },
+    {
+      "id": "logical_networks",
+      "description": "Inventory Azure Local logical networks.",
+      "source_type": "microsoft.azurestackhci/logicalnetworks",
+      "fields": [
+        [
+          "id",
+          "id"
+        ],
+        [
+          "name",
+          "name"
+        ],
+        [
+          "resourceGroup",
+          "resourceGroup"
+        ],
+        [
+          "subscriptionId",
+          "subscriptionId"
+        ],
+        [
+          "subnets",
+          "properties.subnets"
+        ],
+        [
+          "vmSwitchName",
+          "properties.vmSwitchName"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/allversions"
+    },
+    {
+      "id": "network_interfaces",
+      "description": "Inventory Azure Local network interfaces.",
+      "source_type": "microsoft.azurestackhci/networkinterfaces",
+      "fields": [
+        [
+          "id",
+          "id"
+        ],
+        [
+          "name",
+          "name"
+        ],
+        [
+          "resourceGroup",
+          "resourceGroup"
+        ],
+        [
+          "subscriptionId",
+          "subscriptionId"
+        ],
+        [
+          "ipConfigurations",
+          "properties.ipConfigurations"
+        ],
+        [
+          "provisioningState",
+          "properties.provisioningState"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/allversions"
+    },
+    {
+      "id": "storage_containers",
+      "description": "Inventory Azure Local storage containers.",
+      "source_type": "microsoft.azurestackhci/storagecontainers",
+      "fields": [
+        [
+          "id",
+          "id"
+        ],
+        [
+          "name",
+          "name"
+        ],
+        [
+          "resourceGroup",
+          "resourceGroup"
+        ],
+        [
+          "subscriptionId",
+          "subscriptionId"
+        ],
+        [
+          "path",
+          "properties.path"
+        ],
+        [
+          "provisioningState",
+          "properties.provisioningState"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/allversions"
+    },
+    {
+      "id": "virtual_hard_disks",
+      "description": "Inventory Azure Local virtual hard disks.",
+      "source_type": "microsoft.azurestackhci/virtualharddisks",
+      "fields": [
+        [
+          "id",
+          "id"
+        ],
+        [
+          "name",
+          "name"
+        ],
+        [
+          "resourceGroup",
+          "resourceGroup"
+        ],
+        [
+          "subscriptionId",
+          "subscriptionId"
+        ],
+        [
+          "diskSizeGB",
+          "properties.diskSizeGB"
+        ],
+        [
+          "provisioningState",
+          "properties.provisioningState"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/allversions"
+    },
+    {
+      "id": "vm_instances",
+      "description": "Inventory Azure Local virtual machine instances.",
+      "source_type": "microsoft.azurestackhci/virtualmachineinstances",
+      "fields": [
+        [
+          "id",
+          "id"
+        ],
+        [
+          "name",
+          "name"
+        ],
+        [
+          "resourceGroup",
+          "resourceGroup"
+        ],
+        [
+          "subscriptionId",
+          "subscriptionId"
+        ],
+        [
+          "location",
+          "location"
+        ],
+        [
+          "provisioningState",
+          "properties.provisioningState"
+        ],
+        [
+          "status",
+          "properties.status"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/allversions"
+    },
+    {
+      "id": "vm_hardware",
+      "description": "Report Azure Local VM hardware profiles.",
+      "source_type": "microsoft.azurestackhci/virtualmachineinstances",
+      "fields": [
+        [
+          "id",
+          "id"
+        ],
+        [
+          "name",
+          "name"
+        ],
+        [
+          "resourceGroup",
+          "resourceGroup"
+        ],
+        [
+          "subscriptionId",
+          "subscriptionId"
+        ],
+        [
+          "processors",
+          "properties.hardwareProfile.processors"
+        ],
+        [
+          "memoryMB",
+          "properties.hardwareProfile.memoryMB"
+        ],
+        [
+          "vmSize",
+          "properties.hardwareProfile.vmSize"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/allversions"
+    },
+    {
+      "id": "vm_disks",
+      "description": "Report data disk references on Azure Local VMs.",
+      "source_type": "microsoft.azurestackhci/virtualmachineinstances",
+      "fields": [
+        [
+          "id",
+          "id"
+        ],
+        [
+          "name",
+          "name"
+        ],
+        [
+          "resourceGroup",
+          "resourceGroup"
+        ],
+        [
+          "subscriptionId",
+          "subscriptionId"
+        ],
+        [
+          "disk",
+          "item"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/allversions",
+      "expand": "properties.storageProfile.dataDisks"
+    },
+    {
+      "id": "vm_network_adapters",
+      "description": "Report network interface references on Azure Local VMs.",
+      "source_type": "microsoft.azurestackhci/virtualmachineinstances",
+      "fields": [
+        [
+          "id",
+          "id"
+        ],
+        [
+          "name",
+          "name"
+        ],
+        [
+          "resourceGroup",
+          "resourceGroup"
+        ],
+        [
+          "subscriptionId",
+          "subscriptionId"
+        ],
+        [
+          "networkInterface",
+          "item"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/allversions",
+      "expand": "properties.networkProfile.networkInterfaces"
+    },
+    {
+      "id": "guest_agents",
+      "description": "Inventory Azure Local VM guest agent resources.",
+      "source_type": "microsoft.azurestackhci/virtualmachineinstances/guestagents",
+      "fields": [
+        [
+          "id",
+          "id"
+        ],
+        [
+          "name",
+          "name"
+        ],
+        [
+          "resourceGroup",
+          "resourceGroup"
+        ],
+        [
+          "subscriptionId",
+          "subscriptionId"
+        ],
+        [
+          "provisioningState",
+          "properties.provisioningState"
+        ],
+        [
+          "status",
+          "properties.status"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/allversions"
+    },
+    {
+      "id": "hybrid_identity",
+      "description": "Inventory Azure Local VM hybrid identity metadata.",
+      "source_type": "microsoft.azurestackhci/virtualmachineinstances/hybrididentitymetadata",
+      "fields": [
+        [
+          "id",
+          "id"
+        ],
+        [
+          "name",
+          "name"
+        ],
+        [
+          "resourceGroup",
+          "resourceGroup"
+        ],
+        [
+          "subscriptionId",
+          "subscriptionId"
+        ],
+        [
+          "provisioningState",
+          "properties.provisioningState"
+        ],
+        [
+          "identity",
+          "properties.identity"
+        ]
+      ],
+      "docs": "https://learn.microsoft.com/en-us/azure/templates/microsoft.azurestackhci/allversions"
+    }
+  ]
+}
