@@ -235,7 +235,8 @@ def build() -> None:
             source_label = f"`ARG: {report['source_type']}`" if source == "arg" else f"`NC: /networking/v1/{report['source']}`"
             if source == "nc" and report.get("child"):
                 source_label = f"`NC: /networking/v1/{report['source']}/{{id}}/{report['child']}`"
-            compatibility.append(f"| [`{report['id']}`]({category}/python/{py_name}) | {source_label} | [Schema or protocol]({report['docs']}) |")
+            reference_label = "Resource schema" if source == "arg" else "Network Controller protocol"
+            compatibility.append(f"| [`{report['id']}`]({category}/python/{py_name}) | {source_label} | [{reference_label}]({report['docs']}) |")
             (directory / "powershell" / ps_name).write_text(ps_content, encoding="utf-8")
             (directory / "python" / py_name).write_text(py_content, encoding="utf-8")
             lines.append(f"| {report['description']} | [PowerShell](powershell/{ps_name}) | [Python](python/{py_name}) |")

@@ -2,7 +2,7 @@
 
 Author: Paul Bryant
 
-This repository contains 200 read-only report scripts across four areas. Each area has 25 distinct reports, with one PowerShell and one Python entry point for each report. The reports export selected inventory and configuration fields. They do not change infrastructure.
+This repository defines 100 read-only reports across four areas. Each report has a small PowerShell entry point and a small Python entry point, for 200 entry point files in total. The report definitions live in `tools/build_reports.py`; the shared request and CSV handling lives in `_shared`. The reports export selected inventory and configuration fields. They do not change infrastructure.
 
 | Area | PowerShell | Python | Scope |
 | --- | ---: | ---: | --- |
